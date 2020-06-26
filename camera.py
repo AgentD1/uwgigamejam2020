@@ -18,15 +18,15 @@ class Camera:
         self.draw_cool_pattern_for_testing_purposes()
     
     def draw_cool_pattern_for_testing_purposes(self):
-        black = False
+        inverted = False
         for x in range(0, world_surface.get_width(), 50):
             for y in range(0, world_surface.get_height(), 50):
-                if black:
-                    pygame.draw.rect(world_surface, (255, 255, 255), (x, y, 50, 50))
+                if inverted:
+                    pygame.draw.rect(world_surface, (255, 0, 0), (x, y, 50, 50))
                 else:
-                    pygame.draw.rect(world_surface, (0, 0, 0), (x, y, 50, 50))
-                black = not black
-            black = not black
+                    pygame.draw.rect(world_surface, (0, 255, 0), (x, y, 50, 50))
+                inverted = not inverted
+            inverted = not inverted
     
     def stop_drawing(self):
         display.blit(world_surface, (-self.x, -self.y))
