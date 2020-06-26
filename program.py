@@ -38,6 +38,7 @@ while not quitRequested:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitRequested = True
+
     display.fill((0, 0, 0))
     camera.start_drawing()
 
