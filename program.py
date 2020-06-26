@@ -20,7 +20,6 @@ background_height = 1200
 world_surface = pygame.Surface((background_width, background_height))
 camera = Camera(world_surface, display)
 
-
 quitRequested = False
 
 while not quitRequested:
@@ -38,18 +37,24 @@ while not quitRequested:
                 camera.x -= 1"""
         elif event.type == pygame.KEYUP:
             pass
-
+        
         print(event)
-
+    
     keys_pressed = pygame.key.get_pressed()
+    cx = camera.x
+    cy = camera.y
     if keys_pressed[pygame.K_w]:
-        camera.y += 1
+        cy -= 1
     if keys_pressed[pygame.K_s]:
-        camera.y -= 1
+        cy += 1
     if keys_pressed[pygame.K_a]:
-        camera.x += 1
+        cx -= 1
     if keys_pressed[pygame.K_d]:
-        camera.x -= 1
+        cx += 1
+    print(cx, " ", cy)
+    
+    camera.move_bounded(cx, cy, 0, 0, -background_width + display_width, -background_height + display_height)
+    # Make sure the camera isn't out of bound
     
     display.fill((0, 0, 0))
     
