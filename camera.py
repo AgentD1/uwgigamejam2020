@@ -1,3 +1,5 @@
+import pygame
+
 world_surface = None
 display = None
 
@@ -13,6 +15,18 @@ class Camera:
     
     def start_drawing(self):
         world_surface.fill((255, 255, 255))
+        self.draw_cool_pattern_for_testing_purposes()
+    
+    def draw_cool_pattern_for_testing_purposes(self):
+        black = False
+        for x in range(0, world_surface.get_width(), 50):
+            for y in range(0, world_surface.get_height(), 50):
+                if black:
+                    pygame.draw.rect(world_surface, (255, 255, 255), (x, y, 50, 50))
+                else:
+                    pygame.draw.rect(world_surface, (0, 0, 0), (x, y, 50, 50))
+                black = not black
+            black = not black
     
     def stop_drawing(self):
         display.blit(world_surface, (-self.x, -self.y))
