@@ -3,12 +3,16 @@ import random
 import pygame
 from World import World
 from Player import Player
-
+from controller import Controller
 from camera import Camera
 from Tile import Tile
 from tiletype import TileType
 
 pygame.init()
+
+SOMECOLOR = (200, 100, 0)
+
+movingsprites = pygame.sprite.Group()
 
 display_width = 800
 display_height = 600
@@ -18,11 +22,14 @@ pygame.display.set_caption("UWGI Game Jam 2020: Jacob Parker, James Wigg")
 
 clock = pygame.time.Clock()
 
+world_presets = [["world1"], ["world2"]]  # tile presets for different levels, perhaps make a tile_presets file
+
 background_width = 1600
 background_height = 1200
+world = World(background_width, background_height, 20, 20, [])
 
-world_surface = pygame.Surface((background_width, background_height))
-camera = Camera(world_surface, display)
+p1 = Player(50, 50, SOMECOLOR)
+movingsprites.add(p1)
 
 quitRequested = False
 
@@ -45,8 +52,12 @@ for x in range(12):
 for x in range(50):
     for y in range(25):
         tiles.append(Tile(x * 50, y * 50, random.choice(tile_types), world_surface))
+camera = Camera(world.background, display)
+
+controller = Controller(p1,camera)
 
 while not quitRequested:
+    controller.check_keys()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitRequested = True
@@ -77,17 +88,18 @@ while not quitRequested:
     camera.move_bounded(cx, cy, 0, 0, -background_width + display_width, -background_height + display_height)
     # Make sure the camera isn't out of bound
     
+
     display.fill((0, 0, 0))
-    
     camera.start_drawing()
-    
-    pygame.draw.circle(world_surface, (255, 0, 0), (400, 400), 50)
+
+    pygame.draw.circle(world.background, (255, 0, 0), (400, 400), 50)
     
     for tile in tiles:
         tile.draw()
     
     camera.stop_drawing()
-    
+
+    movingsprites.draw(display)
     pygame.display.update()
     clock.tick(60)
 
