@@ -1,4 +1,6 @@
 import pygame
+from World import World
+from Player import Player
 
 from camera import Camera
 
@@ -12,11 +14,12 @@ pygame.display.set_caption("UWGI Game Jam 2020: Jacob Parker, James Wigg")
 
 clock = pygame.time.Clock()
 
-world_width = 1600
-world_height = 1200
+background_width = 1600
+background_height = 1200
 
-world_surface = pygame.Surface((world_width, world_height))
+world_surface = pygame.Surface((background_width, background_height))
 camera = Camera(world_surface, display)
+
 
 quitRequested = False
 
@@ -35,8 +38,9 @@ while not quitRequested:
                 camera.x -= 1"""
         elif event.type == pygame.KEYUP:
             pass
+
         print(event)
-    
+
     keys_pressed = pygame.key.get_pressed()
     if keys_pressed[pygame.K_w]:
         camera.y += 1
