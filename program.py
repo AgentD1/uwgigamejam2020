@@ -41,20 +41,23 @@ def get_sprite_at_spritesheet_location(x, y):
     return sprite_sheet.subsurface((x * 50, y * 50, 50, 50))
 
 
-tile_type_test = TileType(get_sprite_at_spritesheet_location(0, 0))
+tile_type_test = TileType(get_sprite_at_spritesheet_location(0, 0), None, None)
 
 tiles = []
 tile_types = []
 for x in range(12):
     for y in range(2):
-        tile_types.append(TileType(get_sprite_at_spritesheet_location(x, y)))
+        tile_types.append(TileType(get_sprite_at_spritesheet_location(x, y), None, None))
+
+world.tiles = tiles
+
+camera = Camera(world.background, display)
+
+controller = Controller(p1, camera, background_width, background_height, display_width, display_height)
 
 for x in range(50):
     for y in range(25):
-        tiles.append(Tile(x * 50, y * 50, random.choice(tile_types), world_surface))
-camera = Camera(world.background, display)
-
-controller = Controller(p1,camera)
+        tiles.append(Tile(x * 50, y * 50, random.choice(tile_types), camera.world_surface))
 
 while not quitRequested:
     controller.check_keys()
@@ -88,18 +91,18 @@ while not quitRequested:
     camera.move_bounded(cx, cy, 0, 0, -background_width + display_width, -background_height + display_height)
     # Make sure the camera isn't out of bound
     
-
     display.fill((0, 0, 0))
     camera.start_drawing()
-
+    
     pygame.draw.circle(world.background, (255, 0, 0), (400, 400), 50)
     
     for tile in tiles:
         tile.draw()
     
+    movingsprites.draw(world.background)
+    
     camera.stop_drawing()
-
-    movingsprites.draw(display)
+    
     pygame.display.update()
     clock.tick(60)
 
