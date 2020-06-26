@@ -10,6 +10,11 @@ pygame.display.set_caption("UWGI Game Jam 2020: Jacob Parker, James Wigg")
 
 clock = pygame.time.Clock()
 
+world_width = 1600
+world_height = 1200
+
+worldSurf = pygame.Surface((world_width, world_height))
+
 quitRequested = False
 
 while not quitRequested:
@@ -22,11 +27,8 @@ while not quitRequested:
             pass
         print(event)
 
-    if pygame.key.get_pressed()[pygame.K_SPACE]:
-        display.fill((255, 0, 0))
-    else:
-        display.fill((0, 255, 255))
-    
+    display.fill((255, 0, 0) if pygame.key.get_pressed()[pygame.K_SPACE] else (0, 255, 255))
+
     pygame.display.update()
     clock.tick(60)
 
