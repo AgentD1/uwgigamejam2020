@@ -28,7 +28,7 @@ background_width = 1600
 background_height = 1200
 world = World(background_width, background_height, 20, 20, [])
 
-p1 = Player(50, 50, SOMECOLOR)
+p1 = Player(1, 1, SOMECOLOR)
 movingsprites.add(p1)
 
 quitRequested = False
