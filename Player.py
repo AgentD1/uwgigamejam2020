@@ -2,11 +2,10 @@ import pygame
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, color):
+    def __init__(self, x, y, image):
         super().__init__()
         
-        self.image = pygame.Surface([15, 15])
-        self.image.fill(color)
+        self.image = image
         
         self.pos = [x, y]
         
