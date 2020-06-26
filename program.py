@@ -14,6 +14,20 @@ SOMECOLOR = (200, 100, 0)
 
 movingsprites = pygame.sprite.Group()
 
+tile_sprite_sheet = pygame.image.load("tiles.png")  # image width / tile width * desired tile width
+tile_sprite_sheet = pygame.transform.scale(tile_sprite_sheet, (int(384 / 32 * 50), int(96 / 32 * 50)))
+
+player_sprite_sheet = pygame.image.load("player.png")
+
+
+def get_sprite_at_tiles_spritesheet_location(x, y):
+    return tile_sprite_sheet.subsurface((x * 50, y * 50, 50, 50))
+
+
+def get_sprite_at_player_spritesheet_location(x, y):
+    return player_sprite_sheet.subsurface((x * 32, y * 32, 32, 32))
+
+
 display_width = 800
 display_height = 600
 
@@ -28,24 +42,9 @@ background_width = 1600
 background_height = 1200
 world = World(background_width, background_height, 20, 20, [])
 
-p1 = Player(1, 1, SOMECOLOR)
-movingsprites.add(p1)
+p1 = Player(1, 1, get_sprite_at_player_spritesheet_location(0, 0))
 
 quitRequested = False
-
-tile_sprite_sheet = pygame.image.load("tiles.png")  # image width / tile width * desired tile width
-tile_sprite_sheet = pygame.transform.scale(tile_sprite_sheet, (int(384 / 32 * 50), int(96 / 32 * 50)))
-
-player_sprite_sheet = pygame.image.load("player.png")
-
-
-def get_sprite_at_tiles_spritesheet_location(x, y):
-    return tile_sprite_sheet.subsurface((x * 50, y * 50, 50, 50))
-
-
-def get_sprite_at_player_spritesheet_location(x, y):
-    return player_sprite_sheet.subsurface((x * 32, y * 32, 32, 32))
-
 
 tile_type_test = TileType(get_sprite_at_tiles_spritesheet_location(0, 0), None, None)
 
