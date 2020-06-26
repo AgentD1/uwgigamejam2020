@@ -18,6 +18,7 @@ tile_sprite_sheet = pygame.image.load("tiles.png")  # image width / tile width *
 tile_sprite_sheet = pygame.transform.scale(tile_sprite_sheet, (int(384 / 32 * 50), int(96 / 32 * 50)))
 
 player_sprite_sheet = pygame.image.load("player.png")
+player_sprite_sheet = pygame.transform.scale(player_sprite_sheet, (int(256 / 32 * 64), int(32 / 32 * 64)))
 
 
 def get_sprite_at_tiles_spritesheet_location(x, y):
@@ -25,7 +26,7 @@ def get_sprite_at_tiles_spritesheet_location(x, y):
 
 
 def get_sprite_at_player_spritesheet_location(x, y):
-    return player_sprite_sheet.subsurface((x * 32, y * 32, 32, 32))
+    return player_sprite_sheet.subsurface((x * 64, y * 64, 64, 64))
 
 
 display_width = 800
