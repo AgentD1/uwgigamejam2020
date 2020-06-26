@@ -36,7 +36,7 @@ while not quitRequested:
         elif event.type == pygame.KEYUP:
             pass
         print(event)
-
+    
     keys_pressed = pygame.key.get_pressed()
     if keys_pressed[pygame.K_w]:
         camera.y += 1
@@ -46,15 +46,15 @@ while not quitRequested:
         camera.x += 1
     if keys_pressed[pygame.K_d]:
         camera.x -= 1
-
+    
     display.fill((0, 0, 0))
-
+    
     camera.start_drawing()
-
+    
     pygame.draw.circle(world_surface, (255, 0, 0), (400, 400), 50)
-
+    
     camera.stop_drawing()
-
+    
     pygame.display.update()
     clock.tick(60)
 
