@@ -43,8 +43,7 @@ background_width = 1600
 background_height = 1200
 world = World(background_width, background_height, 20, 20, [])
 
-p1 = Player(50, 50, get_sprite_at_player_spritesheet_location(0, 0))
-movingsprites.add(p1)
+p1 = Player(1, 1, get_sprite_at_player_spritesheet_location(0, 0))
 
 quitRequested = False
 
