@@ -1,5 +1,7 @@
 import pygame
 
+from camera import Camera
+
 pygame.init()
 
 display_width = 800
@@ -13,7 +15,8 @@ clock = pygame.time.Clock()
 world_width = 1600
 world_height = 1200
 
-worldSurf = pygame.Surface((world_width, world_height))
+world_surface = pygame.Surface((world_width, world_height))
+camera = Camera(world_surface, display)
 
 quitRequested = False
 
@@ -22,12 +25,35 @@ while not quitRequested:
         if event.type == pygame.QUIT:
             quitRequested = True
         elif event.type == pygame.KEYDOWN:
-            pass
+            """if event.key == pygame.K_w:
+                camera.y += 1
+            elif event.key == pygame.K_s:
+                camera.y -= 1
+            elif event.key == pygame.K_a:
+                camera.x += 1
+            elif event.key == pygame.K_d:
+                camera.x -= 1"""
         elif event.type == pygame.KEYUP:
             pass
         print(event)
 
-    display.fill((255, 0, 0) if pygame.key.get_pressed()[pygame.K_SPACE] else (0, 255, 255))
+    keys_pressed = pygame.key.get_pressed()
+    if keys_pressed[pygame.K_w]:
+        camera.y += 1
+    if keys_pressed[pygame.K_s]:
+        camera.y -= 1
+    if keys_pressed[pygame.K_a]:
+        camera.x += 1
+    if keys_pressed[pygame.K_d]:
+        camera.x -= 1
+
+    display.fill((0, 0, 0))
+
+    camera.start_drawing()
+
+    pygame.draw.circle(world_surface, (255, 0, 0), (400, 400), 50)
+
+    camera.stop_drawing()
 
     pygame.display.update()
     clock.tick(60)
