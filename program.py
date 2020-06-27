@@ -7,6 +7,7 @@ from controller import Controller
 from camera import Camera
 from Tile import Tile
 from tiletype import TileType
+from Animation import Animation
 
 pygame.init()
 
@@ -43,7 +44,15 @@ background_width = 1600
 background_height = 1200
 world = World(background_width, background_height, 20, 20, [])
 
-p1 = Player(1, 1, get_sprite_at_player_spritesheet_location(1, 0), world)
+p1anim = Animation([get_sprite_at_player_spritesheet_location(0, 0),
+                    get_sprite_at_player_spritesheet_location(1, 0),
+                    get_sprite_at_player_spritesheet_location(2, 0),
+                    get_sprite_at_player_spritesheet_location(3, 0),
+                    get_sprite_at_player_spritesheet_location(4, 0),
+                    get_sprite_at_player_spritesheet_location(5, 0),
+                    get_sprite_at_player_spritesheet_location(6, 0)], [20, 20, 20, 20, 20, 20, 20])
+
+p1 = Player(1, 1, p1anim, world)
 
 quitRequested = False
 
