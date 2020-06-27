@@ -18,6 +18,7 @@ tile_sprite_sheet = pygame.image.load("tiles.png")  # image width / tile width *
 tile_sprite_sheet = pygame.transform.scale(tile_sprite_sheet, (int(384 / 32 * 50), int(96 / 32 * 50)))
 
 player_sprite_sheet = pygame.image.load("player.png")
+player_sprite_sheet = pygame.transform.scale(player_sprite_sheet, (int(256 / 32 * 64), int(32 / 32 * 64)))
 
 
 def get_sprite_at_tiles_spritesheet_location(x, y):
@@ -25,7 +26,7 @@ def get_sprite_at_tiles_spritesheet_location(x, y):
 
 
 def get_sprite_at_player_spritesheet_location(x, y):
-    return player_sprite_sheet.subsurface((x * 32, y * 32, 32, 32))
+    return player_sprite_sheet.subsurface((x * 64, y * 64, 64, 64))
 
 
 display_width = 800
@@ -42,7 +43,7 @@ background_width = 1600
 background_height = 1200
 world = World(background_width, background_height, 20, 20, [])
 
-p1 = Player(1, 1, get_sprite_at_player_spritesheet_location(0, 0))
+p1 = Player(1, 1, get_sprite_at_player_spritesheet_location(1, 0))
 
 quitRequested = False
 
@@ -93,7 +94,8 @@ while not quitRequested:
     if keys_pressed[pygame.K_d]:
         cx += 1"""
     
-    camera.move_bounded(p1.pos[0] - display_width / 2, p1.pos[1] - display_height / 2, 0, 0,
+    camera.move_bounded(p1.rect.x - display_width / 2 + p1.rect.width / 2,
+                        p1.rect.y - display_height / 2 + p1.rect.height / 2, 0, 0,
                         -background_width + display_width,
                         -background_height + display_height)
     # Make sure the camera isn't out of bound
@@ -106,9 +108,11 @@ while not quitRequested:
     for tile in tiles:
         tile.draw()
     
-    movingsprites.draw(world.background)
+    p1.draw(world.background)
     
     camera.stop_drawing()
+    
+    print(p1.pos)
     
     pygame.display.update()
     clock.tick(60)
