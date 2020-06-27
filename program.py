@@ -50,7 +50,8 @@ p1anim = Animation([get_sprite_at_player_spritesheet_location(0, 0),
                     get_sprite_at_player_spritesheet_location(3, 0),
                     get_sprite_at_player_spritesheet_location(4, 0),
                     get_sprite_at_player_spritesheet_location(5, 0),
-                    get_sprite_at_player_spritesheet_location(6, 0)], [20, 20, 20, 20, 20, 20, 20])
+                    get_sprite_at_player_spritesheet_location(6, 0),
+                    get_sprite_at_player_spritesheet_location(7, 0)], [20, 20, 20, 20, 20, 20, 20, 20])
 
 p1 = Player(1, 1, p1anim, world)
 
@@ -98,6 +99,8 @@ def define_tiles():
     tile_types["dlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 2), ["down", "right", "left"], ["down", "right", "left"])
     tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "right"], ["down", "up", "right"])
     tile_types["udlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    # Special tiles
+    tile_types["battery"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 3), [], [])
 
 
 define_tiles()
