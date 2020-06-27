@@ -72,7 +72,6 @@ quitRequested = False
 
 tile_type_test = TileType(get_sprite_at_tiles_spritesheet_location(0, 0), None, None)
 
-
 animations_to_update = [batteryMainAnim, batteryNotMainAnim]
 
 
@@ -153,11 +152,11 @@ def create_battery(x, y, reach):
     main_battery = my_tile.tile_type == tile_types["batteryMain"]
     battery_on = not (my_tile.tile_type == tile_types["batteryOff"])
     surrounding_tiles = []
-    """for offset in range(1, reach + 1):
+    for offset in range(1, reach + 1):
         surrounding_tiles.append(tiles[x + offset][y])
         surrounding_tiles.append(tiles[x - offset][y])
         surrounding_tiles.append(tiles[x][y + offset])
-        surrounding_tiles.append(tiles[x][y - offset])"""
+        surrounding_tiles.append(tiles[x][y - offset])
     batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, "", ""))
 
 
