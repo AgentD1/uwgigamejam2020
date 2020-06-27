@@ -1,21 +1,22 @@
 import pygame
 
+default_font = None
 
 class Player:
-    def __init__(self, x, y, animation, world):
-        super().__init__()
-        
+    def __init__(self, x, y, animation, world, death_anim):
         self.anim = animation
-        
         self.pos = [x, y]
-        
         self.rect = self.anim.current_image.get_rect()
-        
         self.world = world
-        
         self.update_rect_pos()
+        self.dead_stage = -1
+        self.death_anim = death_anim
+        global default_font
+        default_font = pygame.font.SysFont(pygame.font.get_default_font(), 100)
     
     def move(self, direction):
+        if self.dead_stage != -1:
+            return
         movements = {"left": lambda x: [self.pos[0] - 1 if self.pos[0] != 0 else self.pos[0], self.pos[1]],
                      "right": lambda x: [self.pos[0] + 1 if self.pos[0] != 31 else self.pos[0], self.pos[1]],
                      "up": lambda x: [self.pos[0], self.pos[1] - 1 if self.pos[1] != 0 else self.pos[1]],
@@ -35,6 +36,24 @@ class Player:
     def query_board(self, x, y):
         return self.world.tiles[x][y]
     
-    def draw(self, surf):
-        self.anim.update_anim()
-        surf.blit(self.anim.current_image, self.rect)
+    
+    
+    def draw(self, surf, uisurf):
+        if self.dead_stage > sum(self.death_anim.times):
+            pygame.draw.rect(uisurf, (255, 0, 0), (200, 200, 400, 200))
+            global default_font
+            
+            text_surf: pygame.Surface = default_font.render("You died!", True, (255, 255, 255))
+            uisurf.blit(text_surf, (400 - text_surf.get_width() / 2, 300 - text_surf.get_height() / 2))
+            return
+        if self.dead_stage != -1:
+            self.dead_stage += 1
+            self.death_anim.update_anim()
+            surf.blit(self.death_anim.current_image, self.rect)
+        else:
+            self.anim.update_anim()
+            surf.blit(self.anim.current_image, self.rect)
+    
+    def die(self):
+        self.dead_stage = 0
+        # print("yeet")

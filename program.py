@@ -58,6 +58,15 @@ p1anim = Animation([get_sprite_at_player_spritesheet_location(0, 0),
                     get_sprite_at_player_spritesheet_location(6, 0),
                     get_sprite_at_player_spritesheet_location(7, 0)], [20, 20, 20, 20, 20, 20, 20, 20])
 
+p1deathAnim = Animation([get_sprite_at_player_spritesheet_location(0, 1),
+                         get_sprite_at_player_spritesheet_location(1, 1),
+                         get_sprite_at_player_spritesheet_location(2, 1),
+                         get_sprite_at_player_spritesheet_location(3, 1),
+                         get_sprite_at_player_spritesheet_location(4, 1),
+                         get_sprite_at_player_spritesheet_location(5, 1),
+                         get_sprite_at_player_spritesheet_location(6, 1),
+                         get_sprite_at_player_spritesheet_location(7, 1)], [10, 10, 10, 10, 10, 10, 10, 10])
+
 batteryMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(0, 3),
                              get_sprite_at_tiles_spritesheet_location(1, 3),
                              get_sprite_at_tiles_spritesheet_location(2, 3)], [4, 4, 3])
@@ -66,7 +75,7 @@ batteryNotMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(4, 3),
                                 get_sprite_at_tiles_spritesheet_location(5, 3),
                                 get_sprite_at_tiles_spritesheet_location(6, 3)], [4, 4, 3])
 
-p1 = Player(1, 1, p1anim, world)
+p1 = Player(1, 1, p1anim, world, p1deathAnim)
 
 quitRequested = False
 
@@ -174,6 +183,8 @@ def battery_at_location(x, y):
     return None
 
 
+uisurf = pygame.Surface((display_width, display_height), pygame.SRCALPHA)
+
 while not quitRequested:
     controller.check_keys()
     for event in pygame.event.get():
@@ -186,6 +197,8 @@ while not quitRequested:
                     battery_here.rotate(-1)
                 elif event.key == pygame.K_p:
                     battery_here.rotate(1)
+            if event.key == pygame.K_g:
+                p1.die()
             """if event.key == pygame.K_o:
                 # pycharm has big-brain't
                 # noinspection PyTypeChecker,PyUnresolvedReferences
@@ -211,6 +224,7 @@ while not quitRequested:
                         -background_height + display_height)
     # Make sure the camera isn't out of bound
     
+    uisurf.fill((0, 0, 0, 0))
     display.fill((0, 0, 0))
     camera.start_drawing()
     
@@ -223,9 +237,10 @@ while not quitRequested:
         for y in range(len(tiles[x])):
             tiles[x][y].draw()
     
-    p1.draw(world.background)
+    p1.draw(world.background, uisurf)
     
     camera.stop_drawing()
+    pygame.display.get_surface().blit(uisurf, (0, 0))
     
     pygame.display.update()
     clock.tick(60)
