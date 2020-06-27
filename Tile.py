@@ -10,4 +10,7 @@ class Tile:
         self.world_surface = world_surface
     
     def draw(self):
-        self.world_surface.blit(self.tile_type.sprite, (self.x, self.y))
+        if self.tile_type.anim is None:
+            self.world_surface.blit(self.tile_type.sprite, (self.x, self.y))
+        else:
+            self.world_surface.blit(self.tile_type.anim.current_image, (self.x, self.y))

@@ -53,6 +53,14 @@ p1anim = Animation([get_sprite_at_player_spritesheet_location(0, 0),
                     get_sprite_at_player_spritesheet_location(6, 0),
                     get_sprite_at_player_spritesheet_location(7, 0)], [20, 20, 20, 20, 20, 20, 20, 20])
 
+batteryMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(0, 3),
+                             get_sprite_at_tiles_spritesheet_location(1, 3),
+                             get_sprite_at_tiles_spritesheet_location(2, 3)], [4, 4, 3])
+
+batteryNotMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(4, 3),
+                                get_sprite_at_tiles_spritesheet_location(5, 3),
+                                get_sprite_at_tiles_spritesheet_location(6, 3)], [4, 4, 3])
+
 p1 = Player(1, 1, p1anim, world)
 
 quitRequested = False
@@ -60,6 +68,8 @@ quitRequested = False
 tile_type_test = TileType(get_sprite_at_tiles_spritesheet_location(0, 0), None, None)
 
 tile_types = {}
+
+animations_to_update = [batteryMainAnim, batteryNotMainAnim]
 
 
 # big, collapse it if you want to
@@ -100,7 +110,9 @@ def define_tiles():
     tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "right"], ["down", "up", "right"])
     tile_types["udlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
     # Special tiles
-    tile_types["battery"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 3), [], [])
+    tile_types["batteryMain"] = TileType(batteryMainAnim, [], [])
+    tile_types["batteryNotMain"] = TileType(batteryNotMainAnim, [], [])
+    tile_types["batteryOff"] = TileType(get_sprite_at_tiles_spritesheet_location(3, 3), [], [])
 
 
 define_tiles()
@@ -157,6 +169,9 @@ while not quitRequested:
     camera.start_drawing()
     
     # pygame.draw.circle(world.background, (255, 0, 0), (400, 400), 50)
+    
+    for anim in animations_to_update:
+        anim.update_anim()
     
     for x in range(len(tiles)):
         for y in range(len(tiles[x])):

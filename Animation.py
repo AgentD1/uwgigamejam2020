@@ -20,4 +20,3 @@ class Animation:
                 break
         if sum(self.times) < self.time:
             self.time = 0
-        print(self.time)
