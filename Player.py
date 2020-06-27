@@ -16,10 +16,10 @@ class Player:
         self.update_rect_pos()
     
     def move(self, direction):
-        movements = {"left": lambda x: [self.pos[0] - 1, self.pos[1]],
-                     "right": lambda x: [self.pos[0] + 1, self.pos[1]],
-                     "up": lambda x: [self.pos[0], self.pos[1] - 1],
-                     "down": lambda x: [self.pos[0], self.pos[1] + 1]}
+        movements = {"left": lambda x: [self.pos[0] - 1 if self.pos[0] != 0 else self.pos[0], self.pos[1]],
+                     "right": lambda x: [self.pos[0] + 1 if self.pos[0] != 31 else self.pos[0], self.pos[1]],
+                     "up": lambda x: [self.pos[0], self.pos[1] - 1 if self.pos[1] != 0 else self.pos[1]],
+                     "down": lambda x: [self.pos[0], self.pos[1] + 1 if self.pos[1] != 23 else self.pos[1]]}
         try:
             
             self.pos = movements[direction](self.pos)
