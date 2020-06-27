@@ -117,6 +117,15 @@ def define_tiles():
 
 define_tiles()
 
+for (key, value) in tile_types.items():
+    value.name = key
+
+tile_types_generatable = []
+
+for (key, value) in tile_types.items():
+    if 'p' not in key:
+        tile_types_generatable.append(value)
+
 tiles = []
 
 world.tiles = tiles
@@ -128,7 +137,7 @@ controller = Controller(p1, camera, background_width, background_height, display
 for x in range(32):
     tiles.append([])
     for y in range(24):
-        tiles[x].append(Tile(x * 50, y * 50, random.choice(list(tile_types.values())), camera.world_surface))
+        tiles[x].append(Tile(x * 50, y * 50, random.choice(list(tile_types_generatable)), camera.world_surface))
 
 while not quitRequested:
     controller.check_keys()
@@ -136,9 +145,14 @@ while not quitRequested:
         if event.type == pygame.QUIT:
             quitRequested = True
         elif event.type == pygame.KEYDOWN:
-            """if event.key == pygame.K_w:
-                camera.y += 1
-            elif event.key == pygame.K_s:
+            if event.key == pygame.K_o:
+                # pycharm has big-brain't
+                # noinspection PyTypeChecker,PyUnresolvedReferences
+                world.tiles[p1.pos[0]][p1.pos[1]] = Tile(p1.pos[0] * 50, p1.pos[1] * 50, tile_types[world.tile_rotated_relative(world.tiles[p1.pos[0]][p1.pos[1]].tile_type.name, True)], camera.world_surface)
+            if event.key == pygame.K_p:
+                # noinspection PyTypeChecker,PyUnresolvedReferences
+                world.tiles[p1.pos[0]][p1.pos[1]] = Tile(p1.pos[0] * 50, p1.pos[1] * 50, tile_types[world.tile_rotated_relative(world.tiles[p1.pos[0]][p1.pos[1]].tile_type.name, False)], camera.world_surface)
+            """elif event.key == pygame.K_s:
                 camera.y -= 1
             elif event.key == pygame.K_a:
                 camera.x += 1
@@ -148,16 +162,6 @@ while not quitRequested:
             pass
     
     keys_pressed = pygame.key.get_pressed()
-    """cx = camera.x
-    cy = camera.y
-    if keys_pressed[pygame.K_w]:
-        cy -= 1
-    if keys_pressed[pygame.K_s]:
-        cy += 1
-    if keys_pressed[pygame.K_a]:
-        cx -= 1
-    if keys_pressed[pygame.K_d]:
-        cx += 1"""
     
     camera.move_bounded(p1.rect.x - display_width / 2 + p1.rect.width / 2,
                         p1.rect.y - display_height / 2 + p1.rect.height / 2, 0, 0,

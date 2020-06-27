@@ -9,6 +9,6 @@ class TileType:
         else:
             self.sprite = sprite
             self.anim = None
-        
         self.accessible_to = accessible_to
         self.accessible_from = accessible_from
+        self.name = ""
