@@ -1,10 +1,7 @@
-import pygame
-
 from Tile import Tile
-from tiletype import TileType
 
 
-class Battery():
+class Battery:
     def __init__(self, x, y, world, main, on, tilesAttachedTo, upperLimit, lowerLimit):
         self.tiles_attached_to = tilesAttachedTo
         self.main = main

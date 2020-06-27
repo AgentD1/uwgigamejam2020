@@ -150,14 +150,14 @@ def create_battery(x, y, reach):
     if x + reach > len(tiles) - 1 or x - reach < 0 or y + reach > len(tiles[0]) - 1 or y - reach < 0:
         return
     my_tile = tiles[x][y]
-    main_battery = tile.tile_type == tile_types["batteryMain"]
-    battery_on = not (tile.tile_type == tile_types["batteryOff"])
+    main_battery = my_tile.tile_type == tile_types["batteryMain"]
+    battery_on = not (my_tile.tile_type == tile_types["batteryOff"])
     surrounding_tiles = []
-    for offset in range(1, reach + 1):
+    """for offset in range(1, reach + 1):
         surrounding_tiles.append(tiles[x + offset][y])
         surrounding_tiles.append(tiles[x - offset][y])
         surrounding_tiles.append(tiles[x][y + offset])
-        surrounding_tiles.append(tiles[x][y - offset])
+        surrounding_tiles.append(tiles[x][y - offset])"""
     batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, "", ""))
 
 
