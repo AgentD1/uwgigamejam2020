@@ -2,11 +2,12 @@ import pygame
 
 
 class World:
-    def __init__(self, background_width, background_height, world_width, world_height, tiles):
+    def __init__(self, background_width, background_height, world_width, world_height, tiles, tile_type_dict):
         self.world_width = world_width
         self.world_height = world_height
         self.tiles = tiles
         self.background = pygame.Surface((background_width, background_height))
+        self.tile_type_dict = tile_type_dict
     
     def tile_rotated_absolute(self, tile, rotation_direction):
         if tile in ["batteryMain", "batteryNotMain", "batteryOff", ""]:
