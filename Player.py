@@ -21,10 +21,8 @@ class Player:
                      "up": lambda x: [self.pos[0], self.pos[1] - 1 if self.pos[1] != 0 else self.pos[1]],
                      "down": lambda x: [self.pos[0], self.pos[1] + 1 if self.pos[1] != 23 else self.pos[1]]}
         try:
-            
             if self.query_board(self.pos[0], self.pos[1]).tile_type.accessible_to.__contains__(direction) and \
-                    self.query_board(movements[direction](self.pos)[0],
-                                     movements[direction](self.pos)[1]).tile_type.accessible_from.__contains__(
+                    self.query_board(movements[direction](self.pos)[0], movements[direction](self.pos)[1]).tile_type.accessible_from.__contains__(
                         {"left": "right", "right": "left", "up": "down", "down": "up"}[direction]):
                 self.pos = movements[direction](self.pos)
                 self.update_rect_pos()

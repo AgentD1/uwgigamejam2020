@@ -10,12 +10,12 @@ from tiletype import TileType
 
 pygame.init()
 
-SOMECOLOR = (200, 100, 0)
+# SOMECOLOR = (200, 100, 0)
 
-movingsprites = pygame.sprite.Group()
+# movingsprites = pygame.sprite.Group()
 
 tile_sprite_sheet = pygame.image.load("tiles.png")  # image width / tile width * desired tile width
-tile_sprite_sheet = pygame.transform.scale(tile_sprite_sheet, (int(384 / 32 * 50), int(96 / 32 * 50)))
+tile_sprite_sheet = pygame.transform.scale(tile_sprite_sheet, (int(384 / 32 * 50), int(160 / 32 * 50)))
 
 player_sprite_sheet = pygame.image.load("player.png")
 player_sprite_sheet = pygame.transform.scale(player_sprite_sheet, (int(256 / 32 * 64), int(32 / 32 * 64)))
@@ -33,7 +33,7 @@ display_width = 800
 display_height = 600
 
 display = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_caption("UWGI Game Jam 2020: Jacob Parker, James Wigg")
+pygame.display.set_caption("UW GI Game Jam 2020: Jacob Parker, James Wigg")
 
 clock = pygame.time.Clock()
 
@@ -67,43 +67,28 @@ def define_tiles():
     tile_types["lrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 0), ["left", "right"], ["left", "right"])
     tile_types["drp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 0), ["down", "right"], ["down", "right"])
     tile_types["dlp"] = TileType(get_sprite_at_tiles_spritesheet_location(11, 0), ["down", "left"], ["down", "left"])
-    tile_types["ulr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 1), ["up", "left", "right"],
-                                  ["up", "left", "right"])
-    tile_types["udl/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 1), ["up", "left", "down"],
-                                  ["up", "left", "down"])
+    tile_types["ulr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 1), ["up", "left", "right"], ["up", "left", "right"])
+    tile_types["udl/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 1), ["up", "left", "down"], ["up", "left", "down"])
     tile_types["ur/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 1), ["up", "right"], ["up", "right"])
     tile_types["ul/"] = TileType(get_sprite_at_tiles_spritesheet_location(3, 1), ["up", "left"], ["up", "left"])
-    tile_types["ulrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 1), ["up", "left", "right"],
-                                  ["up", "left", "right"])
-    tile_types["udln"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 1), ["up", "left", "down"],
-                                  ["up", "left", "down"])
+    tile_types["ulrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 1), ["up", "left", "right"], ["up", "left", "right"])
+    tile_types["udln"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 1), ["up", "left", "down"], ["up", "left", "down"])
     tile_types["urn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 1), ["up", "right"], ["up", "right"])
     tile_types["uln"] = TileType(get_sprite_at_tiles_spritesheet_location(7, 1), ["up", "left"], ["up", "left"])
-    tile_types["ulrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 1), ["up", "left", "right"],
-                                  ["up", "left", "right"])
-    tile_types["udlp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 1), ["up", "left", "down"],
-                                  ["up", "left", "down"])
+    tile_types["ulrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 1), ["up", "left", "right"], ["up", "left", "right"])
+    tile_types["udlp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 1), ["up", "left", "down"], ["up", "left", "down"])
     tile_types["urp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 1), ["up", "right"], ["up", "right"])
     tile_types["ulp"] = TileType(get_sprite_at_tiles_spritesheet_location(11, 1), ["up", "left"], ["up", "left"])
-    tile_types["dlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 2), ["down", "right", "left"],
-                                  ["down", "right", "left"])
-    tile_types["udr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 2), ["down", "up", "right"],
-                                  ["down", "up", "right"])
-    tile_types["udlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 2), ["down", "up", "left", "right"],
-                                   ["down", "up", "left", "right"])
-    tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), [], [])
-    tile_types["dlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 2), ["down", "right", "left"],
-                                  ["down", "right", "left"])
-    tile_types["udrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 2), ["down", "up", "right"],
-                                  ["down", "up", "right"])
-    tile_types["udlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 2), ["down", "up", "left", "right"],
-                                   ["down", "up", "left", "right"])
-    tile_types["dlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 2), ["down", "right", "left"],
-                                  ["down", "right", "left"])
-    tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "right"],
-                                  ["down", "up", "right"])
-    tile_types["udlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 2), ["down", "up", "left", "right"],
-                                   ["down", "up", "left", "right"])
+    tile_types["dlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 2), ["down", "right", "left"], ["down", "right", "left"])
+    tile_types["udr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 2), ["down", "up", "right"], ["down", "up", "right"])
+    tile_types["udlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types["dlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 2), ["down", "right", "left"], ["down", "right", "left"])
+    tile_types["udrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 2), ["down", "up", "right"], ["down", "up", "right"])
+    tile_types["udlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types["dlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 2), ["down", "right", "left"], ["down", "right", "left"])
+    tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "right"], ["down", "up", "right"])
+    tile_types["udlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
 
 
 define_tiles()

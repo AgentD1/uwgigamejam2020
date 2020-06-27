@@ -27,8 +27,7 @@ class Controller:
             cx -= 1
         if keys_pressed[pygame.K_d]:
             cx += 1
-        self.camera.move_bounded(cx, cy, 0, 0, -self.background_width + self.display_width,
-                                 -self.background_height + self.display_height)
+        self.camera.move_bounded(cx, cy, 0, 0, -self.background_width + self.display_width, -self.background_height + self.display_height)
         # Make sure the camera isn't out of bound
         if keys_pressed[pygame.K_j] and not self.left_held:
             self.p1.move("left")
