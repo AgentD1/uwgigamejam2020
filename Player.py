@@ -22,16 +22,20 @@ class Player:
                      "down": lambda x: [self.pos[0], self.pos[1] + 1]}
         try:
             
-            self.pos = movements[direction](self.pos)
-            self.update_rect_pos()
-        except BaseException:
-            print("error accessing movements in Player.py")
+            if self.query_board(self.pos[0], self.pos[1]).tile_type.accessible_to.__contains__(direction) and \
+                    self.query_board(movements[direction](self.pos)[0],
+                                     movements[direction](self.pos)[1]).tile_type.accessible_from.__contains__(
+                        {"left": "right", "right": "left", "up": "down", "down": "up"}[direction]):
+                self.pos = movements[direction](self.pos)
+                self.update_rect_pos()
+        finally:
+            pass
     
     def update_rect_pos(self):
         [self.rect.x, self.rect.y] = [self.pos[0] * 50 - 6, self.pos[1] * 50 - 4]
     
-    def query_board(self, x, y, board):
-        return type(board[x][y])
+    def query_board(self, x, y):
+        return self.world.tiles[x][y]
     
     def draw(self, surf):
         surf.blit(self.image, self.rect)

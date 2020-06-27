@@ -43,7 +43,7 @@ background_width = 1600
 background_height = 1200
 world = World(background_width, background_height, 20, 20, [])
 
-p1 = Player(1, 1, get_sprite_at_player_spritesheet_location(1, 0))
+p1 = Player(1, 1, get_sprite_at_player_spritesheet_location(1, 0), world)
 
 quitRequested = False
 
@@ -87,21 +87,21 @@ def define_tiles():
     tile_types["ulp"] = TileType(get_sprite_at_tiles_spritesheet_location(11, 1), ["up", "left"], ["up", "left"])
     tile_types["dlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 2), ["down", "right", "left"],
                                   ["down", "right", "left"])
-    tile_types["udr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 2), ["down", "up", "left"],
-                                  ["down", "up", "left"])
+    tile_types["udr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 2), ["down", "up", "right"],
+                                  ["down", "up", "right"])
     tile_types["udlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 2), ["down", "up", "left", "right"],
                                    ["down", "up", "left", "right"])
     tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), [], [])
     tile_types["dlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 2), ["down", "right", "left"],
                                   ["down", "right", "left"])
-    tile_types["udrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 2), ["down", "up", "left"],
-                                  ["down", "up", "left"])
+    tile_types["udrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 2), ["down", "up", "right"],
+                                  ["down", "up", "right"])
     tile_types["udlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 2), ["down", "up", "left", "right"],
                                    ["down", "up", "left", "right"])
     tile_types["dlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 2), ["down", "right", "left"],
                                   ["down", "right", "left"])
-    tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "left"],
-                                  ["down", "up", "left"])
+    tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "right"],
+                                  ["down", "up", "right"])
     tile_types["udlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 2), ["down", "up", "left", "right"],
                                    ["down", "up", "left", "right"])
 
