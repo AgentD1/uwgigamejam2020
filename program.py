@@ -154,6 +154,8 @@ for x in range(32):
 batteries = []
 
 
+# pycharm being stupid again
+# noinspection PyUnresolvedReferences
 def create_battery(x, y, reach):
     if x + reach > len(tiles) - 1 or x - reach < 0 or y + reach > len(tiles[0]) - 1 or y - reach < 0:
         return
@@ -199,6 +201,8 @@ while not quitRequested:
                     battery_here.rotate(1)
             if event.key == pygame.K_g:
                 p1.die()
+            elif event.key == pygame.K_t:
+                print(world.find_connected_battery_locations(p1.pos[0], p1.pos[1]))
             """if event.key == pygame.K_o:
                 # pycharm has big-brain't
                 # noinspection PyTypeChecker,PyUnresolvedReferences

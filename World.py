@@ -72,3 +72,29 @@ class World:
                 "udl": "left",
                 "udlr": "up"  # 4turn tiles
                 }[tile]
+    
+    def find_connected_battery_locations(self, x, y):
+        checked_tile_locations = []
+        self.find_connected_battery_locations_recursive(x, y, checked_tile_locations)
+        final_list = []
+        for (x, y) in checked_tile_locations:
+            if "battery" in self.tiles[x][y].tile_type.name:
+                final_list.append((x, y))
+        return final_list
+    
+    def find_connected_battery_locations_recursive(self, x, y, checked_tile_locations):
+        if (x, y) in checked_tile_locations:
+            return
+        my_tile = self.tiles[x][y]
+        checked_tile_locations.append((x, y))
+        if 'n' in my_tile.tile_type.name or 'p' in my_tile.tile_type.name:
+            if "up" in my_tile.tile_type.accessible_to and y - 1 >= 0 and "down" in self.tiles[x][y - 1].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x, y - 1, checked_tile_locations)
+            if "left" in my_tile.tile_type.accessible_to and x - 1 >= 0 and "right" in self.tiles[x - 1][y].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x - 1, y, checked_tile_locations)
+            if "right" in my_tile.tile_type.accessible_to and x + 1 < self.world_width and "left" in self.tiles[x + 1][y].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x + 1, y, checked_tile_locations)
+            if "down" in my_tile.tile_type.accessible_to and y + 1 < self.world_height and "up" in self.tiles[x][y + 1].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x, y + 1, checked_tile_locations)
+        else:
+            return
