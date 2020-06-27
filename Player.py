@@ -2,7 +2,7 @@ import pygame
 
 
 class Player:
-    def __init__(self, x, y, image):
+    def __init__(self, x, y, image, world):
         super().__init__()
         
         self.image = image
@@ -10,6 +10,9 @@ class Player:
         self.pos = [x, y]
         
         self.rect = self.image.get_rect()
+        
+        self.world = world
+        
         self.update_rect_pos()
     
     def move(self, direction):
