@@ -2,6 +2,7 @@ import pygame
 
 default_font = None
 
+
 class Player:
     def __init__(self, x, y, animation, world, death_anim):
         self.anim = animation
@@ -35,8 +36,6 @@ class Player:
     
     def query_board(self, x, y):
         return self.world.tiles[x][y]
-    
-    
     
     def draw(self, surf, uisurf):
         if self.dead_stage > sum(self.death_anim.times):
