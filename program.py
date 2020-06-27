@@ -110,9 +110,9 @@ def define_tiles():
     tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "right"], ["down", "up", "right"])
     tile_types["udlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
     # Special tiles
-    tile_types["batteryMain"] = TileType(batteryMainAnim, [], [])
-    tile_types["batteryNotMain"] = TileType(batteryNotMainAnim, [], [])
-    tile_types["batteryOff"] = TileType(get_sprite_at_tiles_spritesheet_location(3, 3), [], [])
+    tile_types["batteryMain"] = TileType(batteryMainAnim, ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types["batteryNotMain"] = TileType(batteryNotMainAnim, ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types["batteryOff"] = TileType(get_sprite_at_tiles_spritesheet_location(3, 3), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
 
 
 define_tiles()
