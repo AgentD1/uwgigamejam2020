@@ -18,6 +18,7 @@ class Player:
                      "up": lambda x: [self.pos[0], self.pos[1] - 1],
                      "down": lambda x: [self.pos[0], self.pos[1] + 1]}
         try:
+            
             self.pos = movements[direction](self.pos)
             self.update_rect_pos()
         except BaseException:

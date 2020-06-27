@@ -49,11 +49,66 @@ quitRequested = False
 
 tile_type_test = TileType(get_sprite_at_tiles_spritesheet_location(0, 0), None, None)
 
+tile_types = {}
+
+
+# big, collapse it if you want to
+def define_tiles():
+    # Tile naming scheme: [udlr][pn/] directions powered/notpowered/nothing
+    tile_types["ud/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 0), ["up", "down"], ["up", "down"])
+    tile_types["lr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 0), ["left", "right"], ["left", "right"])
+    tile_types["dr/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 0), ["down", "right"], ["down", "right"])
+    tile_types["dl/"] = TileType(get_sprite_at_tiles_spritesheet_location(3, 0), ["down", "left"], ["down", "left"])
+    tile_types["udn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 0), ["up", "down"], ["up", "down"])
+    tile_types["lrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 0), ["left", "right"], ["left", "right"])
+    tile_types["drn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 0), ["down", "right"], ["down", "right"])
+    tile_types["dln"] = TileType(get_sprite_at_tiles_spritesheet_location(7, 0), ["down", "left"], ["down", "left"])
+    tile_types["udp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 0), ["up", "down"], ["up", "down"])
+    tile_types["lrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 0), ["left", "right"], ["left", "right"])
+    tile_types["drp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 0), ["down", "right"], ["down", "right"])
+    tile_types["dlp"] = TileType(get_sprite_at_tiles_spritesheet_location(11, 0), ["down", "left"], ["down", "left"])
+    tile_types["ulr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 1), ["up", "left", "right"],
+                                  ["up", "left", "right"])
+    tile_types["udl/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 1), ["up", "left", "down"],
+                                  ["up", "left", "down"])
+    tile_types["ur/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 1), ["up", "right"], ["up", "right"])
+    tile_types["ul/"] = TileType(get_sprite_at_tiles_spritesheet_location(3, 1), ["up", "left"], ["up", "left"])
+    tile_types["ulrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 1), ["up", "left", "right"],
+                                  ["up", "left", "right"])
+    tile_types["udln"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 1), ["up", "left", "down"],
+                                  ["up", "left", "down"])
+    tile_types["urn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 1), ["up", "right"], ["up", "right"])
+    tile_types["uln"] = TileType(get_sprite_at_tiles_spritesheet_location(7, 1), ["up", "left"], ["up", "left"])
+    tile_types["ulrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 1), ["up", "left", "right"],
+                                  ["up", "left", "right"])
+    tile_types["udlp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 1), ["up", "left", "down"],
+                                  ["up", "left", "down"])
+    tile_types["urp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 1), ["up", "right"], ["up", "right"])
+    tile_types["ulp"] = TileType(get_sprite_at_tiles_spritesheet_location(11, 1), ["up", "left"], ["up", "left"])
+    tile_types["dlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 2), ["down", "right", "left"],
+                                  ["down", "right", "left"])
+    tile_types["udr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 2), ["down", "up", "left"],
+                                  ["down", "up", "left"])
+    tile_types["udlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 2), ["down", "up", "left", "right"],
+                                   ["down", "up", "left", "right"])
+    tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), [], [])
+    tile_types["dlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 2), ["down", "right", "left"],
+                                  ["down", "right", "left"])
+    tile_types["udrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 2), ["down", "up", "left"],
+                                  ["down", "up", "left"])
+    tile_types["udlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 2), ["down", "up", "left", "right"],
+                                   ["down", "up", "left", "right"])
+    tile_types["dlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(8, 2), ["down", "right", "left"],
+                                  ["down", "right", "left"])
+    tile_types["udrp"] = TileType(get_sprite_at_tiles_spritesheet_location(9, 2), ["down", "up", "left"],
+                                  ["down", "up", "left"])
+    tile_types["udlrp"] = TileType(get_sprite_at_tiles_spritesheet_location(10, 2), ["down", "up", "left", "right"],
+                                   ["down", "up", "left", "right"])
+
+
+define_tiles()
+
 tiles = []
-tile_types = []
-for x in range(12):
-    for y in range(2):
-        tile_types.append(TileType(get_sprite_at_tiles_spritesheet_location(x, y), None, None))
 
 world.tiles = tiles
 
@@ -62,8 +117,9 @@ camera = Camera(world.background, display)
 controller = Controller(p1, camera, background_width, background_height, display_width, display_height)
 
 for x in range(32):
+    tiles.append([])
     for y in range(24):
-        tiles.append(Tile(x * 50, y * 50, random.choice(tile_types), camera.world_surface))
+        tiles[x].append(Tile(x * 50, y * 50, random.choice(list(tile_types.values())), camera.world_surface))
 
 while not quitRequested:
     controller.check_keys()
@@ -103,16 +159,15 @@ while not quitRequested:
     display.fill((0, 0, 0))
     camera.start_drawing()
     
-    pygame.draw.circle(world.background, (255, 0, 0), (400, 400), 50)
+    # pygame.draw.circle(world.background, (255, 0, 0), (400, 400), 50)
     
-    for tile in tiles:
-        tile.draw()
+    for x in range(len(tiles)):
+        for y in range(len(tiles[x])):
+            tiles[x][y].draw()
     
     p1.draw(world.background)
     
     camera.stop_drawing()
-    
-    print(p1.pos)
     
     pygame.display.update()
     clock.tick(60)
