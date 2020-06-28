@@ -12,6 +12,7 @@ class Player:
         self.update_rect_pos()
         self.dead_stage = -1
         self.death_anim = death_anim
+        self.death_time = sum(self.death_anim.times)
         global default_font
         default_font = pygame.font.SysFont(pygame.font.get_default_font(), 100)
     
@@ -38,7 +39,7 @@ class Player:
         return self.world.tiles[x][y]
     
     def draw(self, surf, uisurf):
-        if self.dead_stage > sum(self.death_anim.times):
+        if self.dead_stage > self.death_time:
             pygame.draw.rect(uisurf, (255, 0, 0), (200, 200, 400, 200))
             global default_font
             
@@ -54,5 +55,7 @@ class Player:
             surf.blit(self.anim.current_image, self.rect)
     
     def die(self):
+        if self.dead_stage != -1:
+            return
         self.dead_stage = 0
         # print("yeet")
