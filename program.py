@@ -132,7 +132,7 @@ def define_tiles():
     tile_types["dlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 2), ["down", "right", "left"], ["down", "right", "left"])
     tile_types["udr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 2), ["down", "up", "right"], ["down", "up", "right"])
     tile_types["udlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
-    tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), [], [])
+    tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
     tile_types["dlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 2), ["down", "right", "left"], ["down", "right", "left"])
     tile_types["udrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 2), ["down", "up", "right"], ["down", "up", "right"])
     tile_types["udlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
@@ -168,7 +168,7 @@ lettermap1 = ["                                                        ",
               " b--7  l    l b &---T-7   ll (T----TTT&-b ----7 l       ",
               "    l  l    l l     l l   ll ll    lll        l l       ",
               " l  L--)    l l     L-&---)L-jl    L&j        l l       ",
-              " l     l    l L-TT--7     l   l     r---b-7 --b &       ",
+              " l     l    l L-TT--7     l   l     r---b-7 --b j       ",
               " b-----j    l    l  l     l     r- bj     l   l         ",
               "            l   lL--&--b  l     l  l    l l             ",
               "  r-7 r--T--)   l      l  ( --b-j       l L b-j         ",
@@ -178,7 +178,7 @@ lettermap1 = ["                                                        ",
               "  l l  l L-)l l l    l L--j   l       r-+-7r--7 r-7     ",
               "  l l  l   L) l l    l        l     l l l ll  (-) l     ",
               "  l l  l    l l (-   b   -----&7    l L-b-j(--j (-)     ",
-              "  ( &- b    b-j l    l         l    b  r   l    (-)     ",
+              "  (-&- b    b-j l    l         l    b  r   l    (-)     ",
               "  l    l        l    l         l    l  L&--j    (-j     ",
               "  l             l    l              l           l       ",
               "  l     r-7  b-T)    l         l    l  -b-------j       ",
@@ -202,7 +202,46 @@ wordmap2 = []
 for i in range(38):
     wordmap2.append([])
 
-powermap = []
+powermap = ["                                                        ",
+            "     tttttttttttt    tttttt       tt  tt                ",
+            " ttt t          t                 tt  tt                ",
+            " t t t          ttttt             tt  tt                ",
+            " t ttt          t       tt   tttttttttttt               ",
+            " t   t          t                     ttt               ",
+            " t   t t     tttt                     t t               ",
+            " t     t    t   t                     t t               ",
+            "     t t    t t t                     t t               ",
+            "  t    t    t   t             ttttttttt                ",
+            "       t    t                 t    t                    ",
+            " t     t    t                 t    t                    ",
+            " t     t    t                 t                         ",
+            "  tttttt    t                   tt                      ",
+            "            t   t               t       t               ",
+            "            t   t           tt tt       t               ",
+            "            t   t                       t               ",
+            "            t                           t               ",
+            "            t   t    t                  t               ",
+            "       t    t   t    t                  t               ",
+            "       t    t   t    t                  t               ",
+            "       t        t                                       ",
+            "  tttt       t  t    t                                  ",
+            "  t    t        t    t                  t               ",
+            "  t             t    t                                  ",
+            "  t            tt                      t                ",
+            "  t            t                        t               ",
+            "  tttttt      tt                        t               ",
+            "       t      t                         tttt            ",
+            "       t      ttt                          t            ",
+            "       t        t                          ttt   t      ",
+            "       t        t                       t  t            ",
+            "            ttttt                t         t            ",
+            "                t                t                      ",
+            "                t                t       t              ",
+            "                tttt  ttt  ttt    tttttttt              ",
+            "                     t    t                             ",
+            "                                                        ",
+]
+
 chartotile = {" ": {" ": tile_types[""]}, "b": {" ": tile_types["batteryOff"]}}
 
 keys = ["l", "-", "r", "L", "j", "7", "T", "&", "(", ")", "+", "b"]
@@ -211,12 +250,12 @@ tilenames = ["ud", "lr", "dr", "ur", "ul", "dl", "dlr", "ulr", "udr", "udl", "ud
 for key, tilename in zip(keys, tilenames):
     chartotile[key] = {" ": tile_types[f"{tilename}/"], "t": tile_types[f"{tilename}n"]}
 
-for emprow, row in zip(wordmap2, wordmap1):
-    for char in row:
+for emprow, row, prow in zip(wordmap2, wordmap1, powermap):
+    for char, p in zip(row, prow):
         print(emprow)
         print(row)
         print(char)
-        emprow.append(chartotile[char][" "])
+        emprow.append(chartotile[char][p])
 
 tiles = []
 
