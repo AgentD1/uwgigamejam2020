@@ -48,8 +48,8 @@ clock = pygame.time.Clock()
 
 world_presets = [["world1"], ["world2"]]  # tile presets for different levels, perhaps make a tile_presets file
 
-background_width = 4000
-background_height = 3000
+background_width = 54 * 50
+background_height = 37 * 50
 
 tile_types = {}
 
@@ -99,7 +99,7 @@ positronAnim = Animation([get_sprite_at_enemy_spritesheet_location(0, 0),
                           get_sprite_at_enemy_spritesheet_location(7, 0)
                           ], [10, 10, 10, 10, 10, 10, 10, 10])
 
-p1 = Player(43, 2, p1anim, world, p1deathAnim)
+p1 = Player(1, 13, p1anim, world, p1deathAnim)
 
 quitRequested = False
 
