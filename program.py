@@ -99,7 +99,7 @@ positronAnim = Animation([get_sprite_at_enemy_spritesheet_location(0, 0),
                           get_sprite_at_enemy_spritesheet_location(7, 0)
                           ], [10, 10, 10, 10, 10, 10, 10, 10])
 
-p1 = Player(46, 12, p1anim, world, p1deathAnim)
+p1 = Player(43, 2, p1anim, world, p1deathAnim)
 
 quitRequested = False
 
@@ -167,17 +167,17 @@ for (key, value) in tile_types.items():
         tile_types_generatable.append(value)
 
 lettermap1 = ["                                                        ",
-              "     r----------7  r-T----7       r7r7r7                ",
+              "     r------T---7  r-T----7       r7r7r7                ",
               " r-T-)          l  l      l       lllll(   b----T-7     ",
               " l l l          (--+-b    l       llllll   l    l l     ",
               " (-&-)          l  l   r--b-------jL&&j(7  l    l l     ",
-              " l   l          l  l l l  l           rjl  L----+-j     ",
-              " l   l r----b---+--&-&-j  l           l l       l       ",
+              " l   l          l  l l l  l           rjl  l    l l     ",
+              " l   l r    b---+--&-&-j  l           l l  L----+-j     ",
               " l   b )    l   l         l           l l       l       ",
               " l   l l    l l l         lr-7        l l       l       ",
               " b--7  l    l b &---T-7   ll (T----TTT&-b ----7 l       ",
               "    l  l    l l     l l   ll ll    lll        l l       ",
-              " l  L--)    l l     L-&---)L-jl    L&j        l l       ",
+              " l  L--)    l l     L-&---)L-jl    (&j        l l       ",
               " l     l    l L-TT--7     l   l     r---b-7 --b j       ",
               " b-----j    l    l  l     l     r- bj     l   l         ",
               "            l   lL--&--b  l     l  l    l l             ",
@@ -189,7 +189,7 @@ lettermap1 = ["                                                        ",
               "  l l  l   L) l l    l        l     l l l ll  (-) l     ",
               "  l l  l    l l (-   b   -----&7    l L-b-j(--j (-)     ",
               "  (-&- b    b-j l    l         l    b  T   l    (-)     ",
-              "  l    l        l    l         l    l  L&--j    (-j     ",
+              "  l    l        l    l         l    l  L+--j    (-j     ",
               "  l             l    l              l           l       ",
               "  l     r-T  b-T)    l         l    l  -b-------j       ",
               "  l     l l  l ll    l         l    l   l               ",
@@ -221,19 +221,19 @@ powermap = ["                                                        ",
             " t   t t     tttt                     t t               ",
             " t     t    t   t                     t t               ",
             "     t t    t t t                     t t               ",
-            "  t    t    t   t             ttttttttt                 ",
+            "  t    t    t   t             tttttttttt                ",
             "       t    t                 t    t                    ",
             " t     t    t                 t    t                    ",
-            " t     t    t                 t                         ",
+            " t     t    t                 t        t t              ",
             "  tttttt    t                   tt                      ",
-            "            t   t               t       t               ",
+            "            t   t               t  t    t               ",
             "            t   t           tt tt       t               ",
             "            t   t                       t               ",
             "            t                           t               ",
             "            t   t                       t               ",
             "       t    t   t                       t               ",
             "       t    t   t                       t               ",
-            "       t    t   t                                       ",
+            "       t    t   t                      t t              ",
             "  tttt       t  t                                       ",
             "  t    t        t                       t               ",
             "  t             t                                       ",
@@ -329,7 +329,7 @@ batteryreaches = [[0, 1, 1, 0], [0, 0, 2, 0], [0, 0, 0, 1], [0, 0, 3, 1], [0, 2,
                   ]
 battery_reaches_index = 0
 
-batteryconstraints = [["left", "right"], ["up", "up"], ["up", "left"], ["left", "up"], ["left", "up"], ["down", "up"],
+batteryconstraints = [["left", "right"], ["up", "up"], ["up", "right"], ["left", "up"], ["left", "up"], ["down", "up"],
                       ["down", "up"], ["left", "up"], ["left", "up"], ["up", "left"], ["left", "right"], ["left", "up"],
                       ["left", "up"], ["left", "up"], ["up", "left"], [None, None], ["left", "up"], ["left", "up"],
                       ["left", "up"], ["left", "up"], ["up","left"], ["left", "up"], ["left", "up"], ["up", "down"],
