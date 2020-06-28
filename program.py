@@ -107,7 +107,10 @@ tile_type_test = TileType(get_sprite_at_tiles_spritesheet_location(0, 0), None, 
 
 animations_to_update = [batteryMainAnim, batteryNotMainAnim, positronAnim]
 
-enemies = [Positron(positronAnim, world, 150, 150)]
+enemies = [Positron(positronAnim, world, 150, 150), Positron(positronAnim, world, 26*50, 50),
+           Positron(positronAnim, world, 27*50, 8*50), Positron(positronAnim, world, 17*50, 14*50),
+           Positron(positronAnim, world, 2*50, 15*50), Positron(positronAnim, world, 6*50, 15*50),
+           Positron(positronAnim, world, 26*50, 27*50), Positron(positronAnim, world, 38*50, 27*50)]
 
 
 # big, collapse it if you want to
