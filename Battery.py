@@ -11,10 +11,26 @@ class Battery:
         self.world = world
         self.x = x
         self.y = y
+        self.current_rotation = "up"
     
     def rotate(self, amount):
         if amount == 0:
             return
+        clockwiseMoves = {"left": "up",
+                          "up": "right",
+                          "right": "down",
+                          "down": "left"}
+        counterClockwiseMoves = {v: k for k, v in clockwiseMoves.items()}
+        if amount < 0 and self.current_rotation == self.upper_limit:
+            return
+        if amount > 0 and self.current_rotation == self.lower_limit:
+            return
+        if amount < 0:
+            self.current_rotation = counterClockwiseMoves[self.current_rotation]
+            print(self.current_rotation)
+        else:
+            self.current_rotation = clockwiseMoves[self.current_rotation]
+            print(self.current_rotation)
         tile: Tile
         new_tiles_to_add = []
         for tile in self.tiles_attached_to:
