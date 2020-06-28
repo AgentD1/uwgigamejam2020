@@ -181,7 +181,7 @@ lettermap1 = ["                                                        ",
               "  (-&- b    b-j l    l         l    b  r   l    (-)     ",
               "  l    l        l    l         l    l  L&--j    (-j     ",
               "  l             l    l              l           l       ",
-              "  l     r-7  b-T)    l         l    l  -b-------j       ",
+              "  l     r-T  b-T)    l         l    l  -b-------j       ",
               "  l     l l  l ll    l         l    l   l               ",
               "  LT---T&-j  lr&)    l   rT----b  --&-7 l               ",
               "   l   l      l l    b --L)           l L--7            ",
@@ -211,7 +211,7 @@ powermap = ["                                                        ",
             " t   t t     tttt                     t t               ",
             " t     t    t   t                     t t               ",
             "     t t    t t t                     t t               ",
-            "  t    t    t   t             ttttttttt                ",
+            "  t    t    t   t             ttttttttt                 ",
             "       t    t                 t    t                    ",
             " t     t    t                 t    t                    ",
             " t     t    t                 t                         ",
@@ -311,13 +311,18 @@ def create_battery(x, y, reach):
         surrounding_tiles.append(tiles[x][y - offset])
     batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, "", ""))
 
-batteryreaches = [[0,1,0,0],[0,0,2,0],[0,0,0,1],[0,0,3,1],[0,2,4,0],[0,0,0,4],[0,1,0,0],[0,0,0,2],[0,0,1,0],[0,4,3,0],
-                  [1,0,0,0],[0,0,3,3],[0,0,1,1],[0,3,0,1],[0,0,0,1],[2,2,2,2],[0,3,0,1],[0,0,0,1],[2,0,0,3],[3,0,2,0],
+batteryreaches = [[0,1,0,0],[0,0,0,0],[0,0,0,1],[0,0,3,1],[0,2,4,0],[0,3,0,4],[0,1,0,0],[0,0,0,2],[0,0,1,0],[0,4,3,0],
+                  [1,0,0,0],[0,0,3,3],[0,0,1,1],[0,0,0,1],[0,0,0,1],[2,2,2,2],[0,0,0,1],[0,0,0,1],[2,0,0,3],[3,0,2,0],
                   [0,2,3,0],[0,0,0,1],[0,0,2,0],[1,0,0,0],[1,1,0,0],[1,1,1,0],[1,0,0,0],[0,0,1,0],[0,0,0,3],[0,0,0,1],
                   [2,0,0,1],[2,0,0,0],[1,0,0,0]
                   ]
-
-
+batterycontrants = [["left", "right"], ["up", "up"], ["left", "up"], ["up", "right"], ["up", "right"], ["up", "down"],
+                    ["up, down"], ["up", "right"], ["up", "right"], ["left", "up"], ["left", "right"], ["up", "right"],
+                    ["up", "right"], ["up", "right"], ["left", "up"], [None, None], ["up", "right"], ["up", "right"],
+                    ["up", "right"], ["up", "right"], ["left", "up"], ["up", "right"], ["up", "right"], ["down", "up"],
+                    ["up", "right"], [None, None], ["up", "right"], ["up", "down"], ["up", "right"], ["up", "right"],
+                    ["left", "up"], ["up", "down"], ["up", "down"]
+                    ]
 
 
 for i in tiles:
