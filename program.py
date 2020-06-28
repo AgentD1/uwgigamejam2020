@@ -328,24 +328,26 @@ batteryreaches = [[0, 1, 0, 0], [0, 0, 2, 0], [0, 0, 0, 1], [0, 0, 3, 1], [0, 2,
                   ]
 battery_reaches_index = 0
 
-batterycontrants = [["left", "right"], ["up", "up"], ["left", "up"], ["up", "right"], ["up", "right"], ["up", "down"],
-                    ["up, down"], ["up", "right"], ["up", "right"], ["left", "up"], ["left", "right"], ["up", "right"],
-                    ["up", "right"], ["up", "right"], ["left", "up"], [None, None], ["up", "right"], ["up", "right"],
-                    ["up", "right"], ["up", "right"], ["left", "up"], ["up", "right"], ["up", "right"], ["down", "up"],
-                    ["up", "right"], [None, None], ["up", "right"], ["up", "down"], ["up", "right"], ["up", "right"],
-                    ["left", "up"], ["up", "down"], ["up", "down"]
-                    ]
+batteryconstraints = [["left", "right"], ["up", "up"], ["left", "up"], ["up", "right"], ["up", "right"], ["up", "down"],
+                      ["up", "down"], ["up", "right"], ["up", "right"], ["left", "up"], ["left", "right"], ["up", "right"],
+                      ["up", "right"], ["up", "right"], ["left", "up"], [None, None], ["up", "right"], ["up", "right"],
+                      ["up", "right"], ["up", "right"], ["left", "up"], ["up", "right"], ["up", "right"], ["down", "up"],
+                      ["up", "right"], [None, None], ["up", "right"], ["up", "down"], ["up", "right"], ["up", "right"],
+                      ["left", "up"], ["up", "down"], ["up", "down"]
+                      ]
 
 for i in tiles:
     for tile in i:
         if tile.tile_type == tile_types["batteryMain"] or tile.tile_type == tile_types["batteryOff"] or tile.tile_type == tile_types["batteryNotMain"]:
             binfo = batteryreaches[battery_reaches_index]
+            cinfo = batteryconstraints[battery_reaches_index]
             if binfo is batteryreaches[1]:
                 tile.tile_type = tile_types["batteryMain"]
             if binfo is batteryreaches[32]:
                 tile.tile_type = tile_types["batteryEnd"]
             battery_reaches_index += 1
-            create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], "", "")
+            print(cinfo)
+            create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], cinfo[0], cinfo[1])
             # create_battery_advanced(int(tile.x / 50), int(tile.y / 50), 0, 2, 2, 0, "", "")
 
 
