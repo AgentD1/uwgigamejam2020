@@ -91,7 +91,7 @@ positronAnim = Animation([get_sprite_at_enemy_spritesheet_location(0, 0),
                           get_sprite_at_enemy_spritesheet_location(7, 0)
                           ], [10, 10, 10, 10, 10, 10, 10, 10])
 
-p1 = Player(1, 12, p1anim, world, p1deathAnim)
+p1 = Player(1, 13, p1anim, world, p1deathAnim)
 
 quitRequested = False
 
@@ -311,11 +311,19 @@ def create_battery(x, y, reach):
         surrounding_tiles.append(tiles[x][y - offset])
     batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, "", ""))
 
+batteryreaches = [[0,1,0,0],[0,0,2,0],[0,0,0,1],[0,0,3,1],[0,2,4,0],[0,0,0,4],[0,1,0,0],[0,0,0,2],[0,0,1,0],[0,4,3,0],
+                  [1,0,0,0],[0,0,3,3],[0,0,1,1],[0,3,0,1],[0,0,0,1],[2,2,2,2],[0,3,0,1],[0,0,0,1],[2,0,0,3],[3,0,2,0],
+                  [0,2,3,0],[0,0,0,1],[0,0,2,0],[1,0,0,0],[1,1,0,0],[1,1,1,0],[1,0,0,0],[0,0,1,0],[0,0,0,3],[0,0,0,1],
+                  [2,0,0,1],[2,0,0,0],[1,0,0,0]
+                  ]
+
+
+
 
 for i in tiles:
-    for tile in i:
+    for tile,binfo in zip(i,batteryreaches):
         if tile.tile_type == tile_types["batteryMain"] or tile.tile_type == tile_types["batteryOff"] or tile.tile_type == tile_types["batteryNotMain"]:
-            create_battery(int(tile.x / 50), int(tile.y / 50), 1)
+            create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], "down", "down")
             # batteries.append(Battery(tile.x / 50, tile.y / 50, tile.tile_type == tile_types["batteryMain"], tile.tile_type != tile_types["batteryOff"], [tiles[int(tile.x / 50 + 1)][int(tile.y / 50)]], "up", "up"))
 
 
