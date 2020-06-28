@@ -321,6 +321,7 @@ def create_battery(x, y, reach):
         surrounding_tiles.append(tiles[x][y - offset])
     batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, "", ""))
 
+
 batteryreaches = [[0, 1, 0, 0], [0, 0, 2, 0], [0, 0, 0, 1], [0, 0, 3, 1], [0, 2, 4, 0], [0, 3, 0, 4], [0, 1, 0, 0], [0, 0, 0, 2], [0, 0, 1, 0], [0, 4, 3, 0],
                   [1, 0, 0, 0], [0, 0, 3, 3], [0, 0, 1, 1], [0, 3, 0, 1], [0, 0, 0, 1], [2, 2, 2, 2], [0, 3, 0, 1], [0, 0, 0, 1], [2, 0, 0, 3], [3, 0, 2, 0],
                   [0, 2, 3, 0], [0, 0, 0, 1], [0, 0, 2, 0], [1, 0, 0, 0], [1, 1, 0, 0], [1, 1, 1, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 3], [0, 0, 0, 1],
@@ -408,7 +409,7 @@ while not quitRequested:
         p1.win(sum(tiles[won[0]][won[1]].tile_type.anim.times))
         update_win_anim = tiles[won[0]][won[1]].tile_type.anim
         update_win_anim_time = p1.win_time
-
+    
     if update_win_anim is not None and update_win_anim_time >= 0:
         update_win_anim.update_anim()
         update_win_anim_time -= 1
