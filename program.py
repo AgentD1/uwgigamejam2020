@@ -42,12 +42,12 @@ clock = pygame.time.Clock()
 
 world_presets = [["world1"], ["world2"]]  # tile presets for different levels, perhaps make a tile_presets file
 
-background_width = 1600
-background_height = 1200
+background_width = 4000
+background_height = 3000
 
 tile_types = {}
 
-world = World(background_width, background_height, 20, 20, [], tile_types)
+world = World(background_width, background_height, 54, 38, [], tile_types)
 
 p1anim = Animation([get_sprite_at_player_spritesheet_location(0, 0),
                     get_sprite_at_player_spritesheet_location(1, 0),
@@ -129,6 +129,68 @@ for (key, value) in tile_types.items():
     if 'p' not in key:
         tile_types_generatable.append(value)
 
+lettermap1 = ["                                                        ",
+              "     r----------7  r-T----7       r7r7r7                ",
+              " r-T-)          l  l      l       lllll(   b----T-7     ",
+              " l l l          (--+-b    l       llllll   l    l l     ",
+              " (-&-)          l  l   r--b-------jL&&j(7  l    l l     ",
+              " l   l          l  l l l  l           rjl  L----+-j     ",
+              " l   l r    b---+--&-&-j  l           l l       l       ",
+              " l   b )    l   l         l           l l       l       ",
+              "     l l    l l l         lr-7        l l       l       ",
+              " b--7  l    l b &---T-7   ll (T----TTT&-b ----7 l       ",
+              "    l  l    l l     l l   ll ll    lll        l l       ",
+              " l  L--)    l l     L-&---)L-jl    L&j        l l       ",
+              " l     l    l L-TT--7     l   l     r---b-7 --b &       ",
+              " b-----j    l    l  l     l     r- bj     l   l         ",
+              "            l   lL--&--b  l     l  l    l l             ",
+              "  r-7 r--T--)   l      l  ( --b-j       l L b-j         ",
+              "  l l l  l  l   l      l  l   l         l   l           ",
+              "  l l l  l r+   b----  l  l   l         l               ",
+              "  (-) LT-) l(-7 l    l l  l   l         l               ",
+              "  l l  l L-)l l l    l L--j   l       r-+-7r--7 r-7     ",
+              "  l l  l   L) l l    l        l     l l l ll  (-) l     ",
+              "  l l  l    l l (-   b   -----&7    l L-b-j(--j (-)     ",
+              "  ( &- b    b-j l    l         l    b  r   l    (-)     ",
+              "  l    l        l    l         l    l  L&--j    (-j     ",
+              "  l             l    l              l           l       ",
+              "  l     r-7  b-T)    l         l    l  -b-------j       ",
+              "  l     l l  l ll    l         l    l   l               ",
+              "  LT---T&-j  lr&)    l   rT----b  --&-7 l               ",
+              "   l   l      l l    b --L)           l L--7            ",
+              "   l   l      L-)    l    l           l    l            ",
+              " r-)   l        l    l    ( b----7    L-7  (--b  -b     ",
+              " l l   l        l    l    l l    l    r-jl l            ",
+              " L-)   b--  ----+----)    l      l    L--b j            ",
+              "   l            l    l    l      l                      ",
+              "   l            l    l    l      l       l              ",
+              "   L---j        L--- b--- b---   b-------j              ",
+              "                     l    l                             ",
+              "                                                        "
+]
+
+lettermap = [[tile_types["batteryMain"]]]
+wordmap1 = [list(x) for x in lettermap1]
+wordmap2 = []
+for i in range(38):
+    wordmap2.append([])
+
+powermap = []
+chartotile = {" ": {" ":tile_types[""]},"b":{" ":tile_types["batteryOff"]}}
+
+keys = ["l","-","r","L","j","7","T","&","(",")","+","b"]
+tilenames = ["ud","lr","dr","ur","ul","dl","dlr","ulr","udr","udl","udlr"]
+
+for key,tilename in zip(keys,tilenames):
+    chartotile[key] = {" ": tile_types[f"{tilename}/"], "t": tile_types[f"{tilename}n"]}
+
+for emprow, row in zip(wordmap2, wordmap1):
+    for char in row:
+        print(emprow)
+        print(row)
+        print(char)
+        emprow.append(chartotile[char][" "])
+
 tiles = []
 
 world.tiles = tiles
@@ -137,10 +199,12 @@ camera = Camera(world.background, display)
 
 controller = Controller(p1, camera, background_width, background_height, display_width, display_height)
 
-for x in range(32):
+for x in range(54):
     tiles.append([])
-    for y in range(24):
-        tiles[x].append(Tile(x * 50, y * 50, random.choice(list(tile_types_generatable)), camera.world_surface))
+    for y in range(38):
+        print(f"y is {y}")
+        print(x)
+        tiles[x].append(Tile(x * 50, y * 50, wordmap2[y][x], camera.world_surface))
 
 batteries = []
 
