@@ -29,15 +29,22 @@ class Controller:
             cx += 1
         self.camera.move_bounded(cx, cy, 0, 0, -self.background_width + self.display_width, -self.background_height + self.display_height)"""
         # Make sure the camera isn't out of bound
+        moved = False
         if keys_pressed[pygame.K_a] and not self.left_held:
             self.p1.move("left")
+            moved = True
         if keys_pressed[pygame.K_s] and not self.down_held:
             self.p1.move("down")
+            moved = True
         if keys_pressed[pygame.K_w] and not self.up_held:
             self.p1.move("up")
+            moved = True
         if keys_pressed[pygame.K_d] and not self.right_held:
             self.p1.move("right")
+            moved = True
         self.left_held = keys_pressed[pygame.K_a]
         self.down_held = keys_pressed[pygame.K_s]
         self.up_held = keys_pressed[pygame.K_w]
         self.right_held = keys_pressed[pygame.K_d]
+        
+        return moved

@@ -1,8 +1,7 @@
-import random
-
 import pygame
 
 from Battery import Battery
+from Positron import Positron
 from World import World
 from Player import Player
 from controller import Controller
@@ -23,6 +22,9 @@ tile_sprite_sheet = pygame.transform.scale(tile_sprite_sheet, (int(tile_sprite_s
 player_sprite_sheet = pygame.image.load("player.png")
 player_sprite_sheet = pygame.transform.scale(player_sprite_sheet, (int(player_sprite_sheet.get_width() / 32 * 64), int(player_sprite_sheet.get_height() / 32 * 64)))
 
+enemy_sprite_sheet = pygame.image.load("positron.png")
+enemy_sprite_sheet = pygame.transform.scale(enemy_sprite_sheet, (int(enemy_sprite_sheet.get_width() / 32 * 64), int(enemy_sprite_sheet.get_height() / 32 * 64)))
+
 
 def get_sprite_at_tiles_spritesheet_location(x, y):
     return tile_sprite_sheet.subsurface((x * 50, y * 50, 50, 50))
@@ -30,6 +32,10 @@ def get_sprite_at_tiles_spritesheet_location(x, y):
 
 def get_sprite_at_player_spritesheet_location(x, y):
     return player_sprite_sheet.subsurface((x * 64, y * 64, 64, 64))
+
+
+def get_sprite_at_enemy_spritesheet_location(x, y):
+    return enemy_sprite_sheet.subsurface((x * 64, y * 64, 64, 64))
 
 
 display_width = 800
@@ -56,7 +62,7 @@ p1anim = Animation([get_sprite_at_player_spritesheet_location(0, 0),
                     get_sprite_at_player_spritesheet_location(4, 0),
                     get_sprite_at_player_spritesheet_location(5, 0),
                     get_sprite_at_player_spritesheet_location(6, 0),
-                    get_sprite_at_player_spritesheet_location(7, 0)], [20, 20, 20, 20, 20, 20, 20, 20])
+                    get_sprite_at_player_spritesheet_location(7, 0)], [10, 10, 10, 10, 10, 10, 10, 10])
 
 p1deathAnim = Animation([get_sprite_at_player_spritesheet_location(0, 1),
                          get_sprite_at_player_spritesheet_location(1, 1),
@@ -65,23 +71,35 @@ p1deathAnim = Animation([get_sprite_at_player_spritesheet_location(0, 1),
                          get_sprite_at_player_spritesheet_location(4, 1),
                          get_sprite_at_player_spritesheet_location(5, 1),
                          get_sprite_at_player_spritesheet_location(6, 1),
-                         get_sprite_at_player_spritesheet_location(7, 1)], [10, 10, 10, 10, 10, 10, 10, 10])
+                         get_sprite_at_player_spritesheet_location(7, 1)], [5, 5, 5, 5, 5, 5, 5, 5])
 
 batteryNotMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(0, 3),
-                             get_sprite_at_tiles_spritesheet_location(1, 3),
-                             get_sprite_at_tiles_spritesheet_location(2, 3)], [4, 4, 3])
+                                get_sprite_at_tiles_spritesheet_location(1, 3),
+                                get_sprite_at_tiles_spritesheet_location(2, 3)], [4, 4, 3])
 
 batteryMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(4, 3),
-                                get_sprite_at_tiles_spritesheet_location(5, 3),
-                                get_sprite_at_tiles_spritesheet_location(6, 3)], [4, 4, 3])
+                             get_sprite_at_tiles_spritesheet_location(5, 3),
+                             get_sprite_at_tiles_spritesheet_location(6, 3)], [4, 4, 3])
 
-p1 = Player(1, 1, p1anim, world, p1deathAnim)
+positronAnim = Animation([get_sprite_at_enemy_spritesheet_location(0, 0),
+                          get_sprite_at_enemy_spritesheet_location(1, 0),
+                          get_sprite_at_enemy_spritesheet_location(2, 0),
+                          get_sprite_at_enemy_spritesheet_location(3, 0),
+                          get_sprite_at_enemy_spritesheet_location(4, 0),
+                          get_sprite_at_enemy_spritesheet_location(5, 0),
+                          get_sprite_at_enemy_spritesheet_location(6, 0),
+                          get_sprite_at_enemy_spritesheet_location(7, 0)
+                          ], [10, 10, 10, 10, 10, 10, 10, 10])
+
+p1 = Player(2, 2, p1anim, world, p1deathAnim)
 
 quitRequested = False
 
 tile_type_test = TileType(get_sprite_at_tiles_spritesheet_location(0, 0), None, None)
 
-animations_to_update = [batteryMainAnim, batteryNotMainAnim]
+animations_to_update = [batteryMainAnim, batteryNotMainAnim, positronAnim]
+
+enemies = [Positron(positronAnim, world, 150, 150)]
 
 
 # big, collapse it if you want to
@@ -160,7 +178,7 @@ lettermap1 = ["                                                        ",
               "  l l  l L-)l l l    l L--j   l       r-+-7r--7 r-7     ",
               "  l l  l   L) l l    l        l     l l l ll  (-) l     ",
               "  l l  l    l l (-   b   -----&7    l L-b-j(--j (-)     ",
-              "  ( &- b    b-j l    l         l    b  r   l    (-)     ",
+              "  (-&- b    b-j l    l         l    b  r   l    (-)     ",
               "  l    l        l    l         l    l  L&--j    (-j     ",
               "  l             l    l              l           l       ",
               "  l     r-7  b-T)    l         l    l  -b-------j       ",
@@ -176,7 +194,7 @@ lettermap1 = ["                                                        ",
               "   L---j        L--- b--- b---   b-------j              ",
               "                     l    l                             ",
               "                                                        "
-]
+              ]
 
 lettermap = [[tile_types["batteryMain"]]]
 wordmap1 = [list(x) for x in lettermap1]
@@ -212,23 +230,24 @@ powermap = ["                                                        ",
             "  t            tt                      t                ",
             "  t            t                        t               ",
             "  tttttt      tt                        t               ",
-            "       t      t                         ttt             ",
-            "       t      ttt                         t             ",
-            "       t        t                         ttt   t       ",
-            "       t        t                       t t             ",
-            "            ttttt                t        t             ",
+            "       t      t                         tttt            ",
+            "       t      ttt                          t            ",
+            "       t        t                          ttt   t      ",
+            "       t        t                       t  t            ",
+            "            ttttt                t         t            ",
             "                t                t                      ",
-            "                t                t      t               ",
-            "                tttt  ttt  ttt    ttttttt               ",
+            "                t                t       t              ",
+            "                tttt  ttt  ttt    tttttttt              ",
             "                     t    t                             ",
             "                                                        ",
 ]
-chartotile = {" ": {" ":tile_types[""],"t":tile_types["batteryMain"]},"b":{" ":tile_types["batteryOff"]}}
 
-keys = ["l","-","r","L","j","7","T","&","(",")","+","b"]
-tilenames = ["ud","lr","dr","ur","ul","dl","dlr","ulr","udr","udl","udlr"]
+chartotile = {" ": {" ": tile_types[""]}, "b": {" ": tile_types["batteryOff"]}}
 
-for key,tilename in zip(keys,tilenames):
+keys = ["l", "-", "r", "L", "j", "7", "T", "&", "(", ")", "+", "b"]
+tilenames = ["ud", "lr", "dr", "ur", "ul", "dl", "dlr", "ulr", "udr", "udl", "udlr"]
+
+for key, tilename in zip(keys, tilenames):
     chartotile[key] = {" ": tile_types[f"{tilename}/"], "t": tile_types[f"{tilename}n"]}
 
 for emprow, row, prow in zip(wordmap2, wordmap1, powermap):
@@ -254,6 +273,26 @@ for x in range(54):
         tiles[x].append(Tile(x * 50, y * 50, wordmap2[y][x], camera.world_surface))
 
 batteries = []
+
+
+# noinspection PyUnresolvedReferences
+def create_battery_advanced(x, y, left_reach, right_reach, up_reach, down_reach, upper_limit, lower_limit):
+    if x + right_reach > len(tiles) - 1 or x - left_reach < 0 or y + down_reach > len(tiles[0]) - 1 or y - up_reach < 0:
+        return
+    my_tile = tiles[x][y]
+    battery_on = not (my_tile.tile_type == tile_types["batteryOff"])
+    main_battery = my_tile.tile_type == tile_types["batteryMain"]
+    surrounding_tiles = []
+    for iii in range(left_reach):
+        surrounding_tiles.append(tiles[x - iii][y])
+    for iii in range(right_reach):
+        surrounding_tiles.append(tiles[x + iii][y])
+    for iii in range(up_reach):
+        surrounding_tiles.append(tiles[x][y - iii])
+    for iii in range(down_reach):
+        surrounding_tiles.append(tiles[x][y + iii])
+    
+    batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, upper_limit, lower_limit))
 
 
 # pycharm being stupid again
@@ -292,7 +331,7 @@ uisurf = pygame.Surface((display_width, display_height), pygame.SRCALPHA)
 world.update_batteries_and_connections()
 
 while not quitRequested:
-    controller.check_keys()
+    player_moved = controller.check_keys()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitRequested = True
@@ -307,22 +346,8 @@ while not quitRequested:
                     world.update_batteries_and_connections()
             if event.key == pygame.K_g:
                 p1.die()
-            elif event.key == pygame.K_t:
-                print(world.find_connected_battery_locations(p1.pos[0], p1.pos[1]))
-            """if event.key == pygame.K_o:
-                # pycharm has big-brain't
-                # noinspection PyTypeChecker,PyUnresolvedReferences
-                world.tiles[p1.pos[0]][p1.pos[1]] = Tile(p1.pos[0] * 50, p1.pos[1] * 50, tile_types[world.tile_rotated_relative(world.tiles[p1.pos[0]][p1.pos[1]].tile_type.name, True)], camera.world_surface)
-            if event.key == pygame.K_p:
-                # noinspection PyTypeChecker,PyUnresolvedReferences
-                world.tiles[p1.pos[0]][p1.pos[1]] = Tile(p1.pos[0] * 50, p1.pos[1] * 50, tile_types[world.tile_rotated_relative(world.tiles[p1.pos[0]][p1.pos[1]].tile_type.name, False)], camera.world_surface)
-            """
-            """elif event.key == pygame.K_s:
-                camera.y -= 1
-            elif event.key == pygame.K_a:
-                camera.x += 1
-            elif event.key == pygame.K_d:
-                camera.x -= 1"""
+            """elif event.key == pygame.K_t:
+                print(world.find_connected_battery_locations(p1.pos[0], p1.pos[1]))"""
         elif event.type == pygame.KEYUP:
             pass
     
@@ -333,6 +358,12 @@ while not quitRequested:
                         -background_width + display_width,
                         -background_height + display_height)
     # Make sure the camera isn't out of bound
+    
+    if player_moved:
+        for enemy in enemies:
+            enemy.update()
+            if enemy.tx == p1.pos[0] and enemy.ty == p1.pos[1]:
+                p1.die()
     
     uisurf.fill((0, 0, 0, 0))
     display.fill((0, 0, 0))
@@ -346,6 +377,9 @@ while not quitRequested:
     for x in range(len(tiles)):
         for y in range(len(tiles[x])):
             tiles[x][y].draw()
+    
+    for enemy in enemies:
+        enemy.draw(world.background)
     
     p1.draw(world.background, uisurf)
     
