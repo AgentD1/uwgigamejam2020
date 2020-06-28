@@ -236,6 +236,26 @@ for x in range(54):
 batteries = []
 
 
+# noinspection PyUnresolvedReferences
+def create_battery_advanced(x, y, left_reach, right_reach, up_reach, down_reach, upper_limit, lower_limit):
+    if x + right_reach > len(tiles) - 1 or x - left_reach < 0 or y + down_reach > len(tiles[0]) - 1 or y - up_reach < 0:
+        return
+    my_tile = tiles[x][y]
+    battery_on = not (my_tile.tile_type == tile_types["batteryOff"])
+    main_battery = my_tile.tile_type == tile_types["batteryMain"]
+    surrounding_tiles = []
+    for iii in range(left_reach):
+        surrounding_tiles.append(tiles[x - iii][y])
+    for iii in range(right_reach):
+        surrounding_tiles.append(tiles[x + iii][y])
+    for iii in range(up_reach):
+        surrounding_tiles.append(tiles[x][y - iii])
+    for iii in range(down_reach):
+        surrounding_tiles.append(tiles[x][y + iii])
+    
+    batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, upper_limit, lower_limit))
+
+
 # pycharm being stupid again
 # noinspection PyUnresolvedReferences
 def create_battery(x, y, reach):
