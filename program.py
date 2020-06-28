@@ -150,7 +150,7 @@ lettermap1 = ["                                                        ",
               " b--7  l    l b &---T-7   ll (T----TTT&-b ----7 l       ",
               "    l  l    l l     l l   ll ll    lll        l l       ",
               " l  L--)    l l     L-&---)L-jl    L&j        l l       ",
-              " l     l    l L-TT--7     l   l     r---b-7 --b &       ",
+              " l     l    l L-TT--7     l   l     r---b-7 --b j       ",
               " b-----j    l    l  l     l     r- bj     l   l         ",
               "            l   lL--&--b  l     l  l    l l             ",
               "  r-7 r--T--)   l      l  ( --b-j       l L b-j         ",
@@ -184,8 +184,46 @@ wordmap2 = []
 for i in range(38):
     wordmap2.append([])
 
-powermap = []
-chartotile = {" ": {" ":tile_types[""]},"b":{" ":tile_types["batteryOff"]}}
+powermap = ["                                                        ",
+            "     tttttttttttt    tttttt       tt  tt                ",
+            " ttt t          t                 tt  tt                ",
+            " t t t          ttttt             tt  tt                ",
+            " t ttt          t       tt   tttttttttttt               ",
+            " t   t          t                     ttt               ",
+            " t   t t     tttt                     t t               ",
+            " t     t    t   t                     t t               ",
+            "     t t    t t t                     t t               ",
+            "  t    t    t   t             ttttttttt                ",
+            "       t    t                 t    t                    ",
+            " t     t    t                 t    t                    ",
+            " t     t    t                 t                         ",
+            "  tttttt    t                   tt                      ",
+            "            t   t               t       t               ",
+            "            t   t           tt tt       t               ",
+            "            t   t                       t               ",
+            "            t                           t               ",
+            "            t   t    t                  t               ",
+            "       t    t   t    t                  t               ",
+            "       t    t   t    t                  t               ",
+            "       t        t                                       ",
+            "  tttt       t  t    t                                  ",
+            "  t    t        t    t                  t               ",
+            "  t             t    t                                  ",
+            "  t            tt                      t                ",
+            "  t            t                        t               ",
+            "  tttttt      tt                        t               ",
+            "       t      t                         ttt             ",
+            "       t      ttt                         t             ",
+            "       t        t                         ttt   t       ",
+            "       t        t                       t t             ",
+            "            ttttt                t        t             ",
+            "                t                t                      ",
+            "                t                t      t               ",
+            "                tttt  ttt  ttt    ttttttt               ",
+            "                     t    t                             ",
+            "                                                        ",
+]
+chartotile = {" ": {" ":tile_types[""],"t":tile_types["batteryMain"]},"b":{" ":tile_types["batteryOff"]}}
 
 keys = ["l","-","r","L","j","7","T","&","(",")","+","b"]
 tilenames = ["ud","lr","dr","ur","ul","dl","dlr","ulr","udr","udl","udlr"]
@@ -193,12 +231,12 @@ tilenames = ["ud","lr","dr","ur","ul","dl","dlr","ulr","udr","udl","udlr"]
 for key,tilename in zip(keys,tilenames):
     chartotile[key] = {" ": tile_types[f"{tilename}/"], "t": tile_types[f"{tilename}n"]}
 
-for emprow, row in zip(wordmap2, wordmap1):
-    for char in row:
+for emprow, row, prow in zip(wordmap2, wordmap1, powermap):
+    for char, p in zip(row, prow):
         print(emprow)
         print(row)
         print(char)
-        emprow.append(chartotile[char][" "])
+        emprow.append(chartotile[char][p])
 
 tiles = []
 
