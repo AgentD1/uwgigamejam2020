@@ -97,6 +97,11 @@ class World:
                             continue
                         if self.tiles[mx][my].tile_type.name == "batteryOff":
                             self.tiles[mx][my] = Tile(mx * 50, my * 50, self.tile_type_dict["batteryNotMain"], tile.world_surface)
+                            for battery in self.batteries:
+                                if battery.x == mx and battery.y == my:
+                                    battery.on = True
+                                    print("turning on")
+                                    break
                     conductors = self.find_connected_battery_locations_and_conductors(tile.tx, tile.ty)
                     for (mx, my) in conductors:
                         if "battery" in self.tiles[mx][my].tile_type.name:

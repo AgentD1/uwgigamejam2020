@@ -323,7 +323,7 @@ for i in tiles:
     for tile in i:
         if tile.tile_type == tile_types["batteryMain"] or tile.tile_type == tile_types["batteryOff"] or tile.tile_type == tile_types["batteryNotMain"]:
             binfo = batteryreaches[battery_reaches_index]
-            if binfo == batteryreaches[1]:
+            if binfo is batteryreaches[1]:
                 tile.tile_type = tile_types["batteryMain"]
             battery_reaches_index += 1
             create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], "", "")
@@ -362,7 +362,9 @@ while not quitRequested:
             elif event.key == pygame.K_l:
                 for battery in batteries:
                     if battery.x == p1.pos[0] and battery.y == p1.pos[1] and battery.on:
+                        print("turning on in program")
                         battery.set_this_to_main_battery()
+                        break
                 world.update_batteries_and_connections()
             """elif event.key == pygame.K_t:
                 print(world.find_connected_battery_locations(p1.pos[0], p1.pos[1]))"""

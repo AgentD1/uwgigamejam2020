@@ -14,9 +14,11 @@ class Battery:
         self.x = x
         self.y = y
         self.current_rotation = "up"
+        if main:
+            global main_battery
+            main_battery = (x, y)
     
     def rotate(self, amount):
-        print(len(self.tiles_attached_to))
         if amount == 0:
             return
         clockwiseMoves = {"left": "up",
@@ -63,6 +65,7 @@ class Battery:
     
     def set_main_battery(self, x, y):
         global main_battery
+        print(main_battery)
         if main_battery != (0, 0):
             self.world.tiles[main_battery[0]][main_battery[1]].tile_type = self.world.tile_type_dict["batteryNotMain"]
             for battery in self.world.batteries:
@@ -72,6 +75,7 @@ class Battery:
         
         main_battery = (x, y)
         self.world.tiles[main_battery[0]][main_battery[1]].tile_type = self.world.tile_type_dict["batteryMain"]
+        print(main_battery)
         for battery in self.world.batteries:
             if battery.x == main_battery[0] and battery.y == main_battery[1]:
                 battery.main = True
