@@ -91,7 +91,7 @@ positronAnim = Animation([get_sprite_at_enemy_spritesheet_location(0, 0),
                           get_sprite_at_enemy_spritesheet_location(7, 0)
                           ], [10, 10, 10, 10, 10, 10, 10, 10])
 
-p1 = Player(2, 2, p1anim, world, p1deathAnim)
+p1 = Player(1, 12, p1anim, world, p1deathAnim)
 
 quitRequested = False
 
