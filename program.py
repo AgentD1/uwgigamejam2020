@@ -81,6 +81,14 @@ batteryMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(4, 3),
                              get_sprite_at_tiles_spritesheet_location(5, 3),
                              get_sprite_at_tiles_spritesheet_location(6, 3)], [4, 4, 3])
 
+batteryEndAnim = Animation([get_sprite_at_tiles_spritesheet_location(0, 4),
+                            get_sprite_at_tiles_spritesheet_location(1, 4),
+                            get_sprite_at_tiles_spritesheet_location(2, 4),
+                            get_sprite_at_tiles_spritesheet_location(3, 4),
+                            get_sprite_at_tiles_spritesheet_location(4, 4),
+                            get_sprite_at_tiles_spritesheet_location(5, 4),
+                            get_sprite_at_tiles_spritesheet_location(6, 4)], [10, 10, 10, 10, 10, 10, 10])
+
 positronAnim = Animation([get_sprite_at_enemy_spritesheet_location(0, 0),
                           get_sprite_at_enemy_spritesheet_location(1, 0),
                           get_sprite_at_enemy_spritesheet_location(2, 0),
@@ -143,6 +151,8 @@ def define_tiles():
     tile_types["batteryMain"] = TileType(batteryMainAnim, ["down", "up", "left", "right"], ["down", "up", "left", "right"])
     tile_types["batteryNotMain"] = TileType(batteryNotMainAnim, ["down", "up", "left", "right"], ["down", "up", "left", "right"])
     tile_types["batteryOff"] = TileType(get_sprite_at_tiles_spritesheet_location(3, 3), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types["batteryEnd"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 4), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types["batteryEndAnim"] = TileType(batteryEndAnim, ["down", "up", "left", "right"], ["down", "up", "left", "right"])
 
 
 define_tiles()
@@ -332,6 +342,8 @@ for i in tiles:
             binfo = batteryreaches[battery_reaches_index]
             if binfo is batteryreaches[1]:
                 tile.tile_type = tile_types["batteryMain"]
+            if binfo is batteryreaches[32]:
+                tile.tile_type = tile_types["batteryEnd"]
             battery_reaches_index += 1
             create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], "", "")
             # create_battery_advanced(int(tile.x / 50), int(tile.y / 50), 0, 2, 2, 0, "", "")
