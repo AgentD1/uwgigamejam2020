@@ -329,12 +329,12 @@ batteryreaches = [[0, 1, 1, 0], [0, 0, 2, 0], [0, 0, 0, 1], [0, 0, 3, 1], [0, 2,
                   ]
 battery_reaches_index = 0
 
-batteryconstraints = [["left", "right"], ["up", "up"], ["up", "left"], ["right", "up"], ["left", "up"], ["down", "up"],
-                      ["down", "up"], ["right", "up"], ["right", "up"], ["up", "left"], ["left", "right"], ["right", "up"],
-                      ["right", "up"], ["right", "up"], ["up", "left"], [None, None], ["right", "up"], ["right", "up"],
-                      ["left", "up"], ["right", "up"], ["up", "left"], ["right", "up"], ["right", "up"], ["up", "down"],
-                      ["right", "up"], [None, None], ["right", "up"], ["down", "up"], ["right", "up"], ["right", "up"],
-                      ["up", "left"], ["down", "up"], ["down", "up"]
+batteryconstraints = [["left", "right"], ["up", "up"], ["up", "left"], ["left", "up"], ["left", "up"], ["down", "up"],
+                      ["down", "up"], ["left", "up"], ["left", "up"], ["up", "left"], ["left", "right"], ["left", "up"],
+                      ["left", "up"], ["left", "up"], ["up", "left"], [None, None], ["left", "up"], ["left", "up"],
+                      ["left", "up"], ["left", "up"], ["up","left"], ["left", "up"], ["left", "up"], ["up", "down"],
+                      ["left", "up"], [None, None], ["left", "up"], ["down", "up"], ["right", "up"], ["left", "up"],
+                      ["up", "right"], ["down", "up"], ["down", "up"]
                       ]
 
 for i in tiles:
