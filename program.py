@@ -67,11 +67,11 @@ p1deathAnim = Animation([get_sprite_at_player_spritesheet_location(0, 1),
                          get_sprite_at_player_spritesheet_location(6, 1),
                          get_sprite_at_player_spritesheet_location(7, 1)], [10, 10, 10, 10, 10, 10, 10, 10])
 
-batteryMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(0, 3),
+batteryNotMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(0, 3),
                              get_sprite_at_tiles_spritesheet_location(1, 3),
                              get_sprite_at_tiles_spritesheet_location(2, 3)], [4, 4, 3])
 
-batteryNotMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(4, 3),
+batteryMainAnim = Animation([get_sprite_at_tiles_spritesheet_location(4, 3),
                                 get_sprite_at_tiles_spritesheet_location(5, 3),
                                 get_sprite_at_tiles_spritesheet_location(6, 3)], [4, 4, 3])
 
