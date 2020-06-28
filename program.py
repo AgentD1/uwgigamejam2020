@@ -409,7 +409,7 @@ while not quitRequested:
         p1.win(sum(tiles[won[0]][won[1]].tile_type.anim.times))
         update_win_anim = tiles[won[0]][won[1]].tile_type.anim
         update_win_anim_time = p1.win_time
-
+    
     if update_win_anim is not None and update_win_anim_time >= 0:
         update_win_anim.update_anim()
         update_win_anim_time -= 1
