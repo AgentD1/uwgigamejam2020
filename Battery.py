@@ -16,6 +16,7 @@ class Battery:
         self.current_rotation = "up"
     
     def rotate(self, amount):
+        print(len(self.tiles_attached_to))
         if amount == 0:
             return
         clockwiseMoves = {"left": "up",
@@ -29,10 +30,8 @@ class Battery:
             return
         if amount < 0:
             self.current_rotation = counterClockwiseMoves[self.current_rotation]
-            print(self.current_rotation)
         else:
             self.current_rotation = clockwiseMoves[self.current_rotation]
-            print(self.current_rotation)
         tile: Tile
         new_tiles_to_add = []
         for tile in self.tiles_attached_to:
