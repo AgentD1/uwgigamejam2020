@@ -48,8 +48,8 @@ clock = pygame.time.Clock()
 
 world_presets = [["world1"], ["world2"]]  # tile presets for different levels, perhaps make a tile_presets file
 
-background_width = 4000
-background_height = 3000
+background_width = 54 * 50
+background_height = 37 * 50
 
 tile_types = {}
 
@@ -99,7 +99,7 @@ positronAnim = Animation([get_sprite_at_enemy_spritesheet_location(0, 0),
                           get_sprite_at_enemy_spritesheet_location(7, 0)
                           ], [10, 10, 10, 10, 10, 10, 10, 10])
 
-p1 = Player(1,13, p1anim, world, p1deathAnim)
+p1 = Player(2, 13, p1anim, world, p1deathAnim)
 
 quitRequested = False
 
@@ -166,44 +166,44 @@ for (key, value) in tile_types.items():
     if 'p' not in key and key != "batteryNotMain":
         tile_types_generatable.append(value)
 
-lettermap1 = ["                                                        ",
-              "     r----------7  r-T----7       r7r7r7                ",
-              " r-T-)          l  l      l       lllll(   b----T-7     ",
-              " l l l          (--+-b    l       llllll   l    l l     ",
-              " (-&-)          l  l   r--b-------jL&&j(7  l    l l     ",
-              " l   l          l  l l l  l           rjl  L----+-j     ",
-              " l   l r----b---+--&-&-j  l           l l       l       ",
-              " l   b )    l   l         l           l l       l       ",
-              " l   l l    l l l         lr-7        l l       l       ",
-              " b--7  l    l b &---T-7   ll (T----TTT&-b ----7 l       ",
-              "    l  l    l l     l l   ll ll    lll        l l       ",
-              " l  L--)    l l     L-&---)L-jl    L&j        l l       ",
-              " l     l    l L-TT--7     l   l     r---b-7 --b j       ",
-              " b-----j    l    l  l     l     r- bj     l   l         ",
-              "            l   lL--&--b  l     l  l    l l             ",
-              "  r-7 r--T--)   l      l  ( --b-j       l L b-j         ",
-              "  l l l  l  l   l      l  l   l         l   l           ",
-              "  l l l  l r+   b----  l  l   l         l               ",
-              "  (-) LT-) l(-7 l    l l  l   l         l               ",
-              "  l l  l L-)l l l    l L--j   l       r-+-7r--7 r-7     ",
-              "  l l  l   L) l l    l        l     l l l ll  (-) l     ",
-              "  l l  l    l l (-   b   -----&7    l L-b-j(--j (-)     ",
-              "  (-&- b    b-j l    l         l    b  T   l    (-)     ",
-              "  l    l        l    l         l    l  L&--j    (-j     ",
-              "  l             l    l              l           l       ",
-              "  l     r-T  b-T)    l         l    l  -b-------j       ",
-              "  l     l l  l ll    l         l    l   l               ",
-              "  LT---T&-j  lr&)    l   rT----b  --&-7 l               ",
-              "   l   l      l l    b --&)           l L--7            ",
-              "   l   l      L-)    l    l           l    l            ",
-              " r-)   l        l    l    ( b----7    L-7  (--b  -b     ",
-              " l l   l        l    l    l l    l    r-jl l            ",
-              " L-)   b--  ----+----)    l      l    L--b j            ",
-              "   l            l    l    l      l                      ",
-              "   l            l    l    l      l       l              ",
-              "   L---j        L--- b--- b---   b-------j              ",
-              "                     l    l                             ",
-              "                                                        "
+lettermap1 = ["                                                      ",
+              "     r----------7  r-T----7       r7r7r7              ",
+              " r-T-)          l  l      l       lllll(   b----T-7   ",
+              " l l l          (--+-b    l       llllll   l    l l   ",
+              " (-&-)          l  l   r--b-------jL&&j(7  l    l l   ",
+              " l   l          l  l l l  l           rjl  L----+-j   ",
+              " l   l r----b---+--&-&-j  l           l l       l     ",
+              " l   b )    l   l         l           l l       l     ",
+              " l   l l    l l l         lr-7        l l       l     ",
+              " b--7  l    l b &---T-7   ll (T----TTT&-b ----7 l     ",
+              "    l  l    l l     l l   ll ll    lll        l l     ",
+              " l  L--)    l l     L-&---)L-jl    L&j        l l     ",
+              " l     l    l L-TT--7     l   l     r---b-7 --b j     ",
+              " b-----j    l    l  l     l     r- bj     l   l       ",
+              "            l   lL--&--b  l     l  l    l l           ",
+              "  r-7 r--T--)   l      l  ( --b-j       l L b-j       ",
+              "  l l l  l  l   l      l  l   l         l   l         ",
+              "  l l l  l r+   b----  l  l   l         l             ",
+              "  (-) LT-) l(-7 l    l l  l   l         l             ",
+              "  l l  l L-)l l l    l L--j   l       r-+-7r--7 r-7   ",
+              "  l l  l   L) l l    l        l     l l l ll  (-) l   ",
+              "  l l  l    l l (-   b   -----&7    l L-b-j(--j (-)   ",
+              "  (-&- b    b-j l    l         l    b  T   l    (-)   ",
+              "  l    l        l    l         l    l  L&--j    (-j   ",
+              "  l             l    l              l           l     ",
+              "  l     r-T  b-T)    l         l    l  -b-------j     ",
+              "  l     l l  l ll    l         l    l   l             ",
+              "  LT---T&-j  lr&)    l   rT----b  --&-7 l             ",
+              "   l   l      l l    b --&)           l L--7          ",
+              "   l   l      L-)    l    l           l    l          ",
+              " r-)   l        l    l    ( b----7    L-7  (--b  -b   ",
+              " l l   l        l    l    l l    l    r-jl l          ",
+              " L-)   b--  ----+----)    l      l    L--b j          ",
+              "   l            l    l    l      l                    ",
+              "   l            l    l    l      l       l            ",
+              "   L---j        L--- b--- b---   b-------j            ",
+              "                     l    l                           ",
+              "                                                      "
               ]
 
 lettermap = [[tile_types["batteryMain"]]]
@@ -329,10 +329,10 @@ batteryreaches = [[0, 1, 1, 0], [0, 0, 2, 0], [0, 0, 0, 1], [0, 0, 3, 1], [0, 2,
                   ]
 battery_reaches_index = 0
 
-batteryconstraints = [["left", "right"], ["up", "up"], ["up", "left"], ["right", "up"], ["right","up"], ["down", "up"],
+batteryconstraints = [["left", "right"], ["up", "up"], ["up", "left"], ["right", "up"], ["left", "up"], ["down", "up"],
                       ["down", "up"], ["right", "up"], ["right", "up"], ["up", "left"], ["left", "right"], ["right", "up"],
                       ["right", "up"], ["right", "up"], ["up", "left"], [None, None], ["right", "up"], ["right", "up"],
-                      ["left", "up"], ["right", "up"], ["up","left"], ["right", "up"], ["right", "up"], ["up", "down"],
+                      ["left", "up"], ["right", "up"], ["up", "left"], ["right", "up"], ["right", "up"], ["up", "down"],
                       ["right", "up"], [None, None], ["right", "up"], ["down", "up"], ["right", "up"], ["right", "up"],
                       ["up", "left"], ["down", "up"], ["down", "up"]
                       ]
