@@ -128,8 +128,8 @@ class World:
             return
         my_tile = self.tiles[x][y]
         checked_tile_locations.append((x, y))
-        #       tiles that can conduct power                                other than batteries                             main battery only
-        if (('n' in my_tile.tile_type.name or 'p' in my_tile.tile_type.name) and "battery" not in my_tile.tile_type.name) or my_tile.tile_type.name is "batteryMain":
+        #       tiles that can conduct power
+        if 'n' in my_tile.tile_type.name or 'p' in my_tile.tile_type.name or "battery" in my_tile.tile_type.name:
             if "up" in my_tile.tile_type.accessible_to and y - 1 >= 0 and "down" in self.tiles[x][y - 1].tile_type.accessible_from:
                 self.find_connected_battery_locations_recursive(x, y - 1, checked_tile_locations)
             if "left" in my_tile.tile_type.accessible_to and x - 1 >= 0 and "right" in self.tiles[x - 1][y].tile_type.accessible_from:
