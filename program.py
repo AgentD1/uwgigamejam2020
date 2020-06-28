@@ -203,9 +203,9 @@ for i in range(38):
     wordmap2.append([])
 
 powermap = ["                                                        ",
-            "     tttttttttttt    tttttt       tt  tt                ",
-            " ttt t          t                 tt  tt                ",
-            " t t t          ttttt             tt  tt                ",
+            "                     tttttt       tt  tt                ",
+            " ttt                              tt  tt                ",
+            " t t            ttttt             tt  tt                ",
             " t ttt          t       tt   tttttttttttt               ",
             " t   t          t                     ttt               ",
             " t   t t     tttt                     t t               ",
@@ -240,7 +240,7 @@ powermap = ["                                                        ",
             "                tttt  ttt  ttt    tttttttt              ",
             "                     t    t                             ",
             "                                                        ",
-]
+            ]
 
 chartotile = {" ": {" ": tile_types[""]}, "b": {" ": tile_types["batteryOff"]}}
 
@@ -283,13 +283,13 @@ def create_battery_advanced(x, y, left_reach, right_reach, up_reach, down_reach,
     battery_on = not (my_tile.tile_type == tile_types["batteryOff"])
     main_battery = my_tile.tile_type == tile_types["batteryMain"]
     surrounding_tiles = []
-    for iii in range(left_reach):
+    for iii in range(1, left_reach + 1):
         surrounding_tiles.append(tiles[x - iii][y])
-    for iii in range(right_reach):
+    for iii in range(1, right_reach + 1):
         surrounding_tiles.append(tiles[x + iii][y])
-    for iii in range(up_reach):
+    for iii in range(1, up_reach + 1):
         surrounding_tiles.append(tiles[x][y - iii])
-    for iii in range(down_reach):
+    for iii in range(1, down_reach + 1):
         surrounding_tiles.append(tiles[x][y + iii])
     
     batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, upper_limit, lower_limit))
@@ -311,11 +311,13 @@ def create_battery(x, y, reach):
         surrounding_tiles.append(tiles[x][y - offset])
     batteries.append(Battery(x, y, world, main_battery, battery_on, surrounding_tiles, "", ""))
 
-batteryreaches = [[0,1,0,0],[0,0,0,0],[0,0,0,1],[0,0,3,1],[0,2,4,0],[0,3,0,4],[0,1,0,0],[0,0,0,2],[0,0,1,0],[0,4,3,0],
-                  [1,0,0,0],[0,0,3,3],[0,0,1,1],[0,0,0,1],[0,0,0,1],[2,2,2,2],[0,0,0,1],[0,0,0,1],[2,0,0,3],[3,0,2,0],
-                  [0,2,3,0],[0,0,0,1],[0,0,2,0],[1,0,0,0],[1,1,0,0],[1,1,1,0],[1,0,0,0],[0,0,1,0],[0,0,0,3],[0,0,0,1],
-                  [2,0,0,1],[2,0,0,0],[1,0,0,0]
+batteryreaches = [[0, 1, 0, 0], [0, 0, 2, 0], [0, 0, 0, 1], [0, 0, 3, 1], [0, 2, 4, 0], [0, 3, 0, 4], [0, 1, 0, 0], [0, 0, 0, 2], [0, 0, 1, 0], [0, 4, 3, 0],
+                  [1, 0, 0, 0], [0, 0, 3, 3], [0, 0, 1, 1], [0, 3, 0, 1], [0, 0, 0, 1], [2, 2, 2, 2], [0, 3, 0, 1], [0, 0, 0, 1], [2, 0, 0, 3], [3, 0, 2, 0],
+                  [0, 2, 3, 0], [0, 0, 0, 1], [0, 0, 2, 0], [1, 0, 0, 0], [1, 1, 0, 0], [1, 1, 1, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 3], [0, 0, 0, 1],
+                  [2, 0, 0, 1], [2, 0, 0, 0], [1, 0, 0, 0]
                   ]
+battery_reaches_index = 0
+
 batterycontrants = [["left", "right"], ["up", "up"], ["left", "up"], ["up", "right"], ["up", "right"], ["up", "down"],
                     ["up, down"], ["up", "right"], ["up", "right"], ["left", "up"], ["left", "right"], ["up", "right"],
                     ["up", "right"], ["up", "right"], ["left", "up"], [None, None], ["up", "right"], ["up", "right"],
@@ -324,12 +326,15 @@ batterycontrants = [["left", "right"], ["up", "up"], ["left", "up"], ["up", "rig
                     ["left", "up"], ["up", "down"], ["up", "down"]
                     ]
 
-
 for i in tiles:
-    for tile,binfo in zip(i,batteryreaches):
+    for tile in i:
         if tile.tile_type == tile_types["batteryMain"] or tile.tile_type == tile_types["batteryOff"] or tile.tile_type == tile_types["batteryNotMain"]:
-            create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], "down", "down")
-            # batteries.append(Battery(tile.x / 50, tile.y / 50, tile.tile_type == tile_types["batteryMain"], tile.tile_type != tile_types["batteryOff"], [tiles[int(tile.x / 50 + 1)][int(tile.y / 50)]], "up", "up"))
+            binfo = batteryreaches[battery_reaches_index]
+            if binfo is batteryreaches[1]:
+                tile.tile_type = tile_types["batteryMain"]
+            battery_reaches_index += 1
+            create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], "", "")
+            # create_battery_advanced(int(tile.x / 50), int(tile.y / 50), 0, 2, 2, 0, "", "")
 
 
 def battery_at_location(x, y):
@@ -340,6 +345,8 @@ def battery_at_location(x, y):
 
 
 uisurf = pygame.Surface((display_width, display_height), pygame.SRCALPHA)
+
+world.batteries = batteries
 
 world.update_batteries_and_connections()
 
@@ -359,6 +366,13 @@ while not quitRequested:
                     world.update_batteries_and_connections()
             if event.key == pygame.K_g:
                 p1.die()
+            elif event.key == pygame.K_l:
+                for battery in batteries:
+                    if battery.x == p1.pos[0] and battery.y == p1.pos[1] and battery.on:
+                        print("turning on in program")
+                        battery.set_this_to_main_battery()
+                        break
+                world.update_batteries_and_connections()
             """elif event.key == pygame.K_t:
                 print(world.find_connected_battery_locations(p1.pos[0], p1.pos[1]))"""
         elif event.type == pygame.KEYUP:
