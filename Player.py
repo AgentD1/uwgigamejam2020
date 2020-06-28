@@ -13,11 +13,13 @@ class Player:
         self.dead_stage = -1
         self.death_anim = death_anim
         self.death_time = sum(self.death_anim.times)
+        self.win_time = 0
+        self.win_stage = -1
         global default_font
         default_font = pygame.font.SysFont(pygame.font.get_default_font(), 100)
     
     def move(self, direction):
-        if self.dead_stage != -1:
+        if self.dead_stage != -1 or self.win_stage != -1:
             return
         movements = {"left": lambda x: [self.pos[0] - 1 if self.pos[0] != 0 else self.pos[0], self.pos[1]],
                      "right": lambda x: [self.pos[0] + 1 if self.pos[0] != self.world.world_width-1 else self.pos[0], self.pos[1]],
@@ -39,9 +41,17 @@ class Player:
         return self.world.tiles[x][y]
     
     def draw(self, surf, uisurf):
+        global default_font
+        if self.win_stage != -1:
+            self.win_stage += 1
+        if self.win_stage >= self.win_time:
+            pygame.draw.rect(uisurf, (255, 255, 0), (200, 200, 400, 200))
+    
+            text_surf: pygame.Surface = default_font.render("You Win!", True, (255, 255, 255))
+            uisurf.blit(text_surf, (400 - text_surf.get_width() / 2, 300 - text_surf.get_height() / 2))
+            return
         if self.dead_stage > self.death_time:
             pygame.draw.rect(uisurf, (255, 0, 0), (200, 200, 400, 200))
-            global default_font
             
             text_surf: pygame.Surface = default_font.render("You died!", True, (255, 255, 255))
             uisurf.blit(text_surf, (400 - text_surf.get_width() / 2, 300 - text_surf.get_height() / 2))
@@ -59,3 +69,8 @@ class Player:
             return
         self.dead_stage = 0
         # print("yeet")
+    
+    def win(self, time):
+        self.win_time = time
+        self.win_stage = 0
+    
