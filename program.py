@@ -290,7 +290,7 @@ def create_battery_advanced(x, y, left_reach, right_reach, up_reach, down_reach,
     if x + right_reach > len(tiles) - 1 or x - left_reach < 0 or y + down_reach > len(tiles[0]) - 1 or y - up_reach < 0:
         return
     my_tile = tiles[x][y]
-    battery_on = not (my_tile.tile_type == tile_types["batteryOff"])
+    battery_on = not (my_tile.tile_type == tile_types["batteryOff"]) and not (my_tile.tile_type == tile_types["batteryEnd"])
     main_battery = my_tile.tile_type == tile_types["batteryMain"]
     surrounding_tiles = []
     for iii in range(1, left_reach + 1):
@@ -346,7 +346,6 @@ for i in tiles:
             if binfo is batteryreaches[32]:
                 tile.tile_type = tile_types["batteryEnd"]
             battery_reaches_index += 1
-            print(cinfo)
             create_battery_advanced(int(tile.x / 50), int(tile.y / 50), binfo[0], binfo[1], binfo[2], binfo[3], cinfo[0], cinfo[1])
             # create_battery_advanced(int(tile.x / 50), int(tile.y / 50), 0, 2, 2, 0, "", "")
 
@@ -364,8 +363,12 @@ world.batteries = batteries
 
 world.update_batteries_and_connections()
 
+update_win_anim = None
+update_win_anim_time = -1
+
 while not quitRequested:
     player_moved = controller.check_keys()
+    won = (0, 0)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quitRequested = True
@@ -374,10 +377,10 @@ while not quitRequested:
             if battery_here is not None:
                 if event.key == pygame.K_o:
                     battery_here.rotate(-1)
-                    world.update_batteries_and_connections()
+                    won = world.update_batteries_and_connections()
                 elif event.key == pygame.K_p:
                     battery_here.rotate(1)
-                    world.update_batteries_and_connections()
+                    won = world.update_batteries_and_connections()
             if event.key == pygame.K_g:
                 p1.die()
             elif event.key == pygame.K_l:
@@ -386,7 +389,7 @@ while not quitRequested:
                         print("turning on in program")
                         battery.set_this_to_main_battery()
                         break
-                world.update_batteries_and_connections()
+                won = world.update_batteries_and_connections()
             """elif event.key == pygame.K_t:
                 print(world.find_connected_battery_locations(p1.pos[0], p1.pos[1]))"""
         elif event.type == pygame.KEYUP:
@@ -399,6 +402,16 @@ while not quitRequested:
                         -background_width + display_width,
                         -background_height + display_height)
     # Make sure the camera isn't out of bound
+    
+    if won != (0, 0):
+        tiles[won[0]][won[1]].tile_type = tile_types["batteryEndAnim"]
+        p1.win(sum(tiles[won[0]][won[1]].tile_type.anim.times))
+        update_win_anim = tiles[won[0]][won[1]].tile_type.anim
+        update_win_anim_time = p1.win_time
+
+    if update_win_anim is not None and update_win_anim_time >= 0:
+        update_win_anim.update_anim()
+        update_win_anim_time -= 1
     
     if player_moved:
         for enemy in enemies:

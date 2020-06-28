@@ -87,12 +87,16 @@ class World:
                         if battery.x == tile.tx and battery.y == tile.ty:
                             battery.on = False
                             break
+
+        return_value = (0, 0)
         
         for row in self.tiles:
             for tile in row:
                 if tile.tile_type.name == "batteryMain":
                     battery_locations = self.find_connected_battery_locations(tile.tx, tile.ty)
                     for (mx, my) in battery_locations:
+                        if self.tiles[mx][my].tile_type.name == "batteryEnd":
+                            return_value = (mx, my)
                         if self.tiles[mx][my].tile_type.name == "batteryMain" or self.tiles[mx][my].tile_type.name == "batteryNotMain":
                             continue
                         if self.tiles[mx][my].tile_type.name == "batteryOff":
@@ -100,7 +104,6 @@ class World:
                             for battery in self.batteries:
                                 if battery.x == mx and battery.y == my:
                                     battery.on = True
-                                    print("turning on")
                                     break
                     conductors = self.find_connected_battery_locations_and_conductors(tile.tx, tile.ty)
                     for (mx, my) in conductors:
@@ -108,6 +111,7 @@ class World:
                             continue
                         if 'n' in self.tiles[mx][my].tile_type.name:
                             self.tiles[mx][my].tile_type = self.tile_type_dict[self.tiles[mx][my].tile_type.name[0:-1] + 'p']
+        return return_value
     
     def find_connected_battery_locations(self, x, y):
         checked_tile_locations = []
