@@ -10,6 +10,7 @@ class World:
         self.tiles = tiles
         self.background = pygame.Surface((background_width, background_height))
         self.tile_type_dict = tile_type_dict
+        self.batteries = None
     
     def tile_rotated_absolute(self, tile, rotation_direction):
         if tile in ["batteryMain", "batteryNotMain", "batteryOff", ""]:
@@ -78,10 +79,16 @@ class World:
     def update_batteries_and_connections(self):
         for row in self.tiles:
             for tile in row:
+                print((tile.tx, tile.ty))
                 if 'p' in tile.tile_type.name:
                     tile.tile_type = self.tile_type_dict[tile.tile_type.name[0:-1] + 'n']
-                elif tile.tile_type == "batteryNotMain":
+                elif tile.tile_type.name == "batteryNotMain":
                     tile.tile_type = self.tile_type_dict["batteryOff"]
+                    for battery in self.batteries:
+                        if battery.x == tile.tx and battery.y == tile.ty:
+                            battery.on = False
+                            print((battery.x, battery.y))
+                            break
         
         for row in self.tiles:
             for tile in row:

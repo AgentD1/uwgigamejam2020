@@ -240,7 +240,7 @@ powermap = ["                                                        ",
             "                tttt  ttt  ttt    tttttttt              ",
             "                     t    t                             ",
             "                                                        ",
-]
+            ]
 
 chartotile = {" ": {" ": tile_types[""]}, "b": {" ": tile_types["batteryOff"]}}
 
@@ -315,7 +315,7 @@ def create_battery(x, y, reach):
 for i in tiles:
     for tile in i:
         if tile.tile_type == tile_types["batteryMain"] or tile.tile_type == tile_types["batteryOff"] or tile.tile_type == tile_types["batteryNotMain"]:
-            create_battery(int(tile.x / 50), int(tile.y / 50), 2)
+            create_battery(int(tile.x / 50), int(tile.y / 50), 1)
             # batteries.append(Battery(tile.x / 50, tile.y / 50, tile.tile_type == tile_types["batteryMain"], tile.tile_type != tile_types["batteryOff"], [tiles[int(tile.x / 50 + 1)][int(tile.y / 50)]], "up", "up"))
 
 
@@ -327,6 +327,8 @@ def battery_at_location(x, y):
 
 
 uisurf = pygame.Surface((display_width, display_height), pygame.SRCALPHA)
+
+world.batteries = batteries
 
 world.update_batteries_and_connections()
 
@@ -346,6 +348,11 @@ while not quitRequested:
                     world.update_batteries_and_connections()
             if event.key == pygame.K_g:
                 p1.die()
+            elif event.key == pygame.K_l:
+                for battery in batteries:
+                    if battery.x == p1.pos[0] and battery.y == p1.pos[1] and battery.on:
+                        battery.set_this_to_main_battery()
+                world.update_batteries_and_connections()
             """elif event.key == pygame.K_t:
                 print(world.find_connected_battery_locations(p1.pos[0], p1.pos[1]))"""
         elif event.type == pygame.KEYUP:
