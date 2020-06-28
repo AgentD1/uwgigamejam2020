@@ -1,5 +1,7 @@
 import pygame
 
+from Tile import Tile
+
 
 class World:
     def __init__(self, background_width, background_height, world_width, world_height, tiles, tile_type_dict):
@@ -72,3 +74,59 @@ class World:
                 "udl": "left",
                 "udlr": "up"  # 4turn tiles
                 }[tile]
+    
+    def update_batteries_and_connections(self):
+        for row in self.tiles:
+            for tile in row:
+                if 'p' in tile.tile_type.name:
+                    tile.tile_type = self.tile_type_dict[tile.tile_type.name[0:-1] + 'n']
+                elif tile.tile_type == "batteryNotMain":
+                    tile.tile_type = self.tile_type_dict["batteryOff"]
+        
+        for row in self.tiles:
+            for tile in row:
+                if tile.tile_type.name == "batteryMain":
+                    battery_locations = self.find_connected_battery_locations(tile.tx, tile.ty)
+                    for (mx, my) in battery_locations:
+                        if self.tiles[mx][my].tile_type.name == "batteryMain" or self.tiles[mx][my].tile_type.name == "batteryNotMain":
+                            continue
+                        if self.tiles[mx][my].tile_type.name == "batteryOff":
+                            self.tiles[mx][my] = Tile(mx * 50, my * 50, self.tile_type_dict["batteryNotMain"], tile.world_surface)
+                    conductors = self.find_connected_battery_locations_and_conductors(tile.tx, tile.ty)
+                    for (mx, my) in conductors:
+                        if "battery" in self.tiles[mx][my].tile_type.name:
+                            continue
+                        if 'n' in self.tiles[mx][my].tile_type.name:
+                            self.tiles[mx][my].tile_type = self.tile_type_dict[self.tiles[mx][my].tile_type.name[0:-1] + 'p']
+    
+    def find_connected_battery_locations(self, x, y):
+        checked_tile_locations = []
+        self.find_connected_battery_locations_recursive(x, y, checked_tile_locations)
+        final_list = []
+        for (x, y) in checked_tile_locations:
+            if "battery" in self.tiles[x][y].tile_type.name:
+                final_list.append((x, y))
+        return final_list
+    
+    def find_connected_battery_locations_and_conductors(self, x, y):
+        checked_tile_locations = []
+        self.find_connected_battery_locations_recursive(x, y, checked_tile_locations)
+        return checked_tile_locations
+    
+    def find_connected_battery_locations_recursive(self, x, y, checked_tile_locations):
+        if (x, y) in checked_tile_locations:
+            return
+        my_tile = self.tiles[x][y]
+        checked_tile_locations.append((x, y))
+        #       tiles that can conduct power                                other than batteries                             main battery only
+        if (('n' in my_tile.tile_type.name or 'p' in my_tile.tile_type.name) and "battery" not in my_tile.tile_type.name) or my_tile.tile_type.name is "batteryMain":
+            if "up" in my_tile.tile_type.accessible_to and y - 1 >= 0 and "down" in self.tiles[x][y - 1].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x, y - 1, checked_tile_locations)
+            if "left" in my_tile.tile_type.accessible_to and x - 1 >= 0 and "right" in self.tiles[x - 1][y].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x - 1, y, checked_tile_locations)
+            if "right" in my_tile.tile_type.accessible_to and x + 1 < self.world_width and "left" in self.tiles[x + 1][y].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x + 1, y, checked_tile_locations)
+            if "down" in my_tile.tile_type.accessible_to and y + 1 < self.world_height and "up" in self.tiles[x][y + 1].tile_type.accessible_from:
+                self.find_connected_battery_locations_recursive(x, y + 1, checked_tile_locations)
+        else:
+            return
