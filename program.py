@@ -132,7 +132,7 @@ def define_tiles():
     tile_types["dlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(0, 2), ["down", "right", "left"], ["down", "right", "left"])
     tile_types["udr/"] = TileType(get_sprite_at_tiles_spritesheet_location(1, 2), ["down", "up", "right"], ["down", "up", "right"])
     tile_types["udlr/"] = TileType(get_sprite_at_tiles_spritesheet_location(2, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
-    tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
+    tile_types[""] = TileType(get_sprite_at_tiles_spritesheet_location(3, 2), [], [])
     tile_types["dlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(4, 2), ["down", "right", "left"], ["down", "right", "left"])
     tile_types["udrn"] = TileType(get_sprite_at_tiles_spritesheet_location(5, 2), ["down", "up", "right"], ["down", "up", "right"])
     tile_types["udlrn"] = TileType(get_sprite_at_tiles_spritesheet_location(6, 2), ["down", "up", "left", "right"], ["down", "up", "left", "right"])
