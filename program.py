@@ -135,7 +135,7 @@ for (key, value) in tile_types.items():
 tile_types_generatable = []
 
 for (key, value) in tile_types.items():
-    if 'p' not in key:
+    if 'p' not in key and key != "batteryNotMain":
         tile_types_generatable.append(value)
 
 tiles = []
@@ -187,6 +187,8 @@ def battery_at_location(x, y):
 
 uisurf = pygame.Surface((display_width, display_height), pygame.SRCALPHA)
 
+world.update_batteries_and_connections()
+
 while not quitRequested:
     controller.check_keys()
     for event in pygame.event.get():
@@ -197,8 +199,10 @@ while not quitRequested:
             if battery_here is not None:
                 if event.key == pygame.K_o:
                     battery_here.rotate(-1)
+                    world.update_batteries_and_connections()
                 elif event.key == pygame.K_p:
                     battery_here.rotate(1)
+                    world.update_batteries_and_connections()
             if event.key == pygame.K_g:
                 p1.die()
             elif event.key == pygame.K_t:
